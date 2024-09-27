@@ -9,8 +9,7 @@
 #       WebSite : https://github.com/openalea-incubator/caribu
 #
 # ==============================================================================
-""" Adaptors for historical caribu input files
-"""
+"""Adaptors for historical caribu input files"""
 
 from alinea.caribu.label import Label
 
@@ -26,7 +25,7 @@ def read_light(file_path):
     """
 
     lights = []
-    with open(file_path, 'r') as infile:
+    with open(file_path, "r") as infile:
         for line in infile:
             line = line.strip()
             if not line:
@@ -48,7 +47,7 @@ def read_pattern(file_path):
     """
 
     pts = []
-    with open(file_path, 'r') as infile:
+    with open(file_path, "r") as infile:
         for line in infile:
             line = line.strip()
             if not line:
@@ -75,13 +74,13 @@ def read_opt(file_path):
     n, soil_reflectance = None, None
     eid = 0
     po = {}
-    with open(file_path, 'r') as infile:
+    with open(file_path, "r") as infile:
         for line in infile:
-            if line.startswith('n'):
+            if line.startswith("n"):
                 n = int(line.split()[1])
-            elif line.startswith('s'):
+            elif line.startswith("s"):
                 soil_reflectance = float(line.split()[2])
-            elif line.startswith('e'):
+            elif line.startswith("e"):
                 eid += 1
                 fields = line.split()
                 opt = list(map(float, [fields[i] for i in (2, 4, 5, 7, 8)]))
@@ -106,19 +105,21 @@ def read_can(file_path):
 
     cscene = {}
 
-    with open(file_path, 'r') as infile:
+    with open(file_path, "r") as infile:
         for line in infile:
             line = line.strip()
             if not line:
                 continue
-            if line.startswith('#'):
+            if line.startswith("#"):
                 continue
             fields = line.split()
             label = fields[2]
             if label not in cscene:
                 cscene[label] = []
             coords = list(map(float, fields[-9:]))
-            cscene[label].append(list(map(tuple, [coords[:3], coords[3:6], coords[6:]])))
+            cscene[label].append(
+                list(map(tuple, [coords[:3], coords[3:6], coords[6:]]))
+            )
 
     return cscene
 

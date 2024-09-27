@@ -24,46 +24,48 @@ default_light = (1, (0, 0, -1))
 
 
 def pattern_string(pattern_tuple):
-    """ format pattern as caribu file string content
-    """
+    """format pattern as caribu file string content"""
     x1, y1, x2, y2 = pattern_tuple
     pattern_tuple = [(min(x1, x2), min(y1, y2)), (max(x1, x2), max(y1, y2))]
-    pattern = '\n'.join([' '.join(map(str, pattern_tuple[0])),
-                         ' '.join(map(str, pattern_tuple[1])), ' '])
+    pattern = "\n".join(
+        [
+            " ".join(map(str, pattern_tuple[0])),
+            " ".join(map(str, pattern_tuple[1])),
+            " ",
+        ]
+    )
     return pattern
 
 
 def light_string(lights):
-    """ format lights as caribu light file string content
-    """
+    """format lights as caribu light file string content"""
 
     def _as_string(light):
         e, p = light
-        return ' '.join(map(str, [e] + list(p))) + '\n'
+        return " ".join(map(str, [e] + list(p))) + "\n"
 
     lines = list(map(_as_string, lights))
 
-    return ''.join(lines)
+    return "".join(lines)
 
 
 def opt_string(species, soil_reflectance=-1):
-    """ format species as caribu opt file string content
-    """
+    """format species as caribu opt file string content"""
 
     n = len(species)
-    o_string = 'n %s\n' % n
+    o_string = "n %s\n" % n
     o_string += "s d %s\n" % soil_reflectance
     species_sorted_keys = sorted(species.keys())
     for key in species_sorted_keys:
         po = species[key]
         if sum(po) <= 0:
-            raise ValueError('Caribu do not accept black body material (absorptance=1)')
+            raise ValueError("Caribu do not accept black body material (absorptance=1)")
         if len(po) == 1:
-            o_string += 'e d %s   d -1 -1  d -1 -1\n' % po
+            o_string += "e d %s   d -1 -1  d -1 -1\n" % po
         elif len(po) == 2:
-            o_string += 'e d -1   d %s %s' % po + ' d %s %s\n' % po
+            o_string += "e d -1   d %s %s" % po + " d %s %s\n" % po
         else:
-            o_string += 'e d -1   d %s %s  d %s %s\n' % po
+            o_string += "e d -1   d %s %s  d %s %s\n" % po
 
     return o_string
 
@@ -87,8 +89,7 @@ def encode_labels(materials, species, x_mat=False):
 
 
 def opt_string_and_labels(materials, soil_reflectance=-1):
-    """ format materials as caribu opt file string content and encode label
-    """
+    """format materials as caribu opt file string content and encode label"""
 
     species = {i + 1: po for i, po in enumerate(list(set(materials)))}
     o_string = opt_string(species, soil_reflectance)
@@ -98,8 +99,7 @@ def opt_string_and_labels(materials, soil_reflectance=-1):
 
 
 def x_opt_strings_and_labels(x_materials, x_soil_reflectance):
-    """ format multispectral materials as caribu opt file strings content
-    """
+    """format multispectral materials as caribu opt file strings content"""
 
     x_opts = list(zip(*list(x_materials.values())))
     x_species = {i + 1: po for i, po in enumerate(list(set(x_opts)))}
@@ -115,55 +115,55 @@ def x_opt_strings_and_labels(x_materials, x_soil_reflectance):
 
 
 def triangles_string(triangles, labels):
-    """ format triangles and associated labels as caribu canopy string content
-    """
+    """format triangles and associated labels as caribu canopy string content"""
     if len(triangles) != len(labels):
-        raise ValueError('The number of triangles and materials should match')
+        raise ValueError("The number of triangles and materials should match")
 
     def _can_string(triangle, label):
         s = "p 1 %s 3" % str(label)
         for pt in triangle:
             s += " %.6f %.6f %.6f" % pt
-        return s + '\n'
+        return s + "\n"
 
     lines = [_can_string(t, l) for t, l in zip(triangles, labels)]
 
-    return ''.join(lines)
+    return "".join(lines)
 
 
 def sensor_string(triangles):
-    """ format sensor triangles as caribu sensor string content
-    """
+    """format sensor triangles as caribu sensor string content"""
 
     n = len(triangles)
-    o_string = '#%s\n' % n
+    o_string = "#%s\n" % n
 
     def _sensor_can_string(idx, triangle):
         s = "p 1 %s 3" % str(idx)
         for pt in triangle:
             s += " %.6f %.6f %.6f" % pt
-        return s + '\n'
+        return s + "\n"
 
     lines = [_sensor_can_string(i + 1, t) for i, t in enumerate(triangles)]
 
-    return o_string + ''.join(lines)
+    return o_string + "".join(lines)
 
 
 def _absorptance(material):
     if len(material) <= 2:
         return 1 - sum(material)
     else:
-        return 1 - sum(material) / 2.
+        return 1 - sum(material) / 2.0
 
 
 def get_incident(eabs, materials):
-    """ estimate incident light using absorbed light and materials
-    
-        For asymetric materials, return a mean estimate
+    """estimate incident light using absorbed light and materials
+
+    For asymetric materials, return a mean estimate
     """
     # check for integrity of caribu output
     if len(eabs) != len(materials):
-        raise ValueError("The number of caribu outputs doesn't match the number of inputs")
+        raise ValueError(
+            "The number of caribu outputs doesn't match the number of inputs"
+        )
     alpha = (_absorptance(m) for m in materials)
 
     return [float(e) / a if a != 0 else e for e, a in zip(eabs, alpha)]
@@ -174,13 +174,21 @@ def write_scene(triangles, materials, canfile, optfile):
         raise ValueError(len(triangles), len(materials))
     o_string, labels = opt_string_and_labels(materials)
     can_string = triangles_string(triangles, labels)
-    open(canfile,'w').write(can_string)
-    open(optfile,'w').write(o_string)
+    open(canfile, "w").write(can_string)
+    open(optfile, "w").write(o_string)
 
 
-
-def raycasting(triangles, materials, lights=(default_light,), domain=None,
-               screen_size=1536, sensors=None, debug = False, canfile = None, optfile = None):
+def raycasting(
+    triangles,
+    materials,
+    lights=(default_light,),
+    domain=None,
+    screen_size=1536,
+    sensors=None,
+    debug=False,
+    canfile=None,
+    optfile=None,
+):
     """Compute monochrome illumination of triangles using caribu raycasting mode.
 
     Args:
@@ -236,26 +244,39 @@ def raycasting(triangles, materials, lights=(default_light,), domain=None,
     else:
         sensor_str = sensor_string(sensors)
 
-    algo = Caribu(canfile=can_string,
-                  skyfile=sky_string,
-                  optfiles=o_string,
-                  patternfile=pattern_str,
-                  sensorfile=sensor_str,
-                  direct=True,
-                  infinitise=infinite,
-                  projection_image_size=screen_size,
-                  resdir=None, resfile=None, debug=debug)
+    algo = Caribu(
+        canfile=can_string,
+        skyfile=sky_string,
+        optfiles=o_string,
+        patternfile=pattern_str,
+        sensorfile=sensor_str,
+        direct=True,
+        infinitise=infinite,
+        projection_image_size=screen_size,
+        resdir=None,
+        resfile=None,
+        debug=debug,
+    )
     algo.run()
-    out = algo.nrj['band0']['data']
-    out['Ei'] = get_incident(out['Eabs'], materials)
+    out = algo.nrj["band0"]["data"]
+    out["Ei"] = get_incident(out["Eabs"], materials)
     if sensors is not None:
-        out['sensors'] = algo.measures['band0']
+        out["sensors"] = algo.measures["band0"]
 
     return out
 
 
-def x_raycasting(triangles, x_materials, lights=(default_light,), domain=None,
-                 screen_size=1536, sensors=None, debug= False, canfile = None, optfile = None):
+def x_raycasting(
+    triangles,
+    x_materials,
+    lights=(default_light,),
+    domain=None,
+    screen_size=1536,
+    sensors=None,
+    debug=False,
+    canfile=None,
+    optfile=None,
+):
     """Compute monochrome illumination of triangles using caribu raycasting mode.
 
     Args:
@@ -294,24 +315,37 @@ def x_raycasting(triangles, x_materials, lights=(default_light,), domain=None,
     # copy to avoid altering input dict
     x_materials = {k: v for k, v in x_materials.items()}
     band, materials = x_materials.popitem()
-    out = raycasting(triangles, materials, lights=lights, domain=domain,
-                     screen_size=screen_size, sensors=sensors, debug=debug)
+    out = raycasting(
+        triangles,
+        materials,
+        lights=lights,
+        domain=domain,
+        screen_size=screen_size,
+        sensors=sensors,
+        debug=debug,
+    )
     x_out[band] = out
 
     for band in x_materials:
         x_out[band] = {}
         absorptance = (_absorptance(m) for m in x_materials[band])
         for var in out:
-            if var != 'Eabs':
+            if var != "Eabs":
                 x_out[band][var] = out[var]
             else:
-                x_out[band]['Eabs'] = [a * e for a, e in zip(absorptance, out['Ei'])]
+                x_out[band]["Eabs"] = [a * e for a, e in zip(absorptance, out["Ei"])]
 
     return x_out
 
 
-def radiosity(triangles, materials, lights=(default_light,), screen_size=1536,
-              sensors=None, debug=False):
+def radiosity(
+    triangles,
+    materials,
+    lights=(default_light,),
+    screen_size=1536,
+    sensors=None,
+    debug=False,
+):
     """Compute monochromatic illumination of triangles using radiosity method.
 
     Args:
@@ -344,7 +378,7 @@ def radiosity(triangles, materials, lights=(default_light,), screen_size=1536,
     """
 
     if len(triangles) <= 1:
-        raise ValueError('Radiosity method needs at least two primitives')
+        raise ValueError("Radiosity method needs at least two primitives")
 
     o_string, labels = opt_string_and_labels(materials)
     can_string = triangles_string(triangles, labels)
@@ -355,27 +389,37 @@ def radiosity(triangles, materials, lights=(default_light,), screen_size=1536,
     else:
         sensor_str = sensor_string(sensors)
 
-    algo = Caribu(canfile=can_string,
-                  skyfile=sky_string,
-                  optfiles=o_string,
-                  sensorfile=sensor_str,
-                  patternfile=None,
-                  direct=False,
-                  infinitise=False,
-                  sphere_diameter=-1,
-                  projection_image_size=screen_size,
-                  resdir=None, resfile=None,debug=debug)
+    algo = Caribu(
+        canfile=can_string,
+        skyfile=sky_string,
+        optfiles=o_string,
+        sensorfile=sensor_str,
+        patternfile=None,
+        direct=False,
+        infinitise=False,
+        sphere_diameter=-1,
+        projection_image_size=screen_size,
+        resdir=None,
+        resfile=None,
+        debug=debug,
+    )
     algo.run()
-    out = algo.nrj['band0']['data']
-    out['Ei'] = get_incident(out['Eabs'], materials)
+    out = algo.nrj["band0"]["data"]
+    out["Ei"] = get_incident(out["Eabs"], materials)
     if sensors is not None:
-        out['sensors'] = algo.measures['band0']
+        out["sensors"] = algo.measures["band0"]
 
     return out
 
 
-def x_radiosity(triangles, x_materials, lights=(default_light,),
-                screen_size=1536, sensors=None, debug=False):
+def x_radiosity(
+    triangles,
+    x_materials,
+    lights=(default_light,),
+    screen_size=1536,
+    sensors=None,
+    debug=False,
+):
     """Compute multi-chromatic illumination of triangles using radiosity method.
 
     Args:
@@ -408,9 +452,9 @@ def x_radiosity(triangles, x_materials, lights=(default_light,),
     """
 
     if len(triangles) <= 1:
-        raise ValueError('Radiosity method needs at least two primitives')
+        raise ValueError("Radiosity method needs at least two primitives")
 
-    no_soil = {band:-1 for band in x_materials}
+    no_soil = {band: -1 for band in x_materials}
     opt_strings, labels = x_opt_strings_and_labels(x_materials, no_soil)
     can_string = triangles_string(triangles, labels)
     sky_string = light_string(lights)
@@ -420,30 +464,44 @@ def x_radiosity(triangles, x_materials, lights=(default_light,),
     else:
         sensor_str = sensor_string(sensors)
 
-    caribu = Caribu(canfile=can_string,
-                    skyfile=sky_string,
-                    optfiles=list(opt_strings.values()),
-                    optnames=list(opt_strings.keys()),
-                    patternfile=None,
-                    sensorfile=sensor_str,
-                    direct=False,
-                    infinitise=False,
-                    sphere_diameter=-1,
-                    projection_image_size=screen_size,
-                    resdir=None, resfile=None, debug=debug)
+    caribu = Caribu(
+        canfile=can_string,
+        skyfile=sky_string,
+        optfiles=list(opt_strings.values()),
+        optnames=list(opt_strings.keys()),
+        patternfile=None,
+        sensorfile=sensor_str,
+        direct=False,
+        infinitise=False,
+        sphere_diameter=-1,
+        projection_image_size=screen_size,
+        resdir=None,
+        resfile=None,
+        debug=debug,
+    )
     caribu.run()
-    out = {k: v['data'] for k, v in caribu.nrj.items()}
+    out = {k: v["data"] for k, v in caribu.nrj.items()}
     for band in out:
-        out[band]['Ei'] = get_incident(out[band]['Eabs'], x_materials[band])
+        out[band]["Ei"] = get_incident(out[band]["Eabs"], x_materials[band])
         if sensors is not None:
-            out[band]['sensors'] = caribu.measures[band]
+            out[band]["sensors"] = caribu.measures[band]
 
     return out
 
 
-def mixed_radiosity(triangles, materials, lights, domain, soil_reflectance,
-                    diameter, layers, height, screen_size=1536, sensors=None,
-                    debug=False):
+def mixed_radiosity(
+    triangles,
+    materials,
+    lights,
+    domain,
+    soil_reflectance,
+    diameter,
+    layers,
+    height,
+    screen_size=1536,
+    sensors=None,
+    debug=False,
+):
     """Compute monochrome illumination of triangles using mixed-radiosity model.
 
     Args:
@@ -481,7 +539,7 @@ def mixed_radiosity(triangles, materials, lights, domain, soil_reflectance,
     """
 
     if len(triangles) <= 1:
-        raise ValueError('Radiosity method needs at least two primitives')
+        raise ValueError("Radiosity method needs at least two primitives")
 
     o_string, labels = opt_string_and_labels(materials, soil_reflectance)
     can_string = triangles_string(triangles, labels)
@@ -493,31 +551,47 @@ def mixed_radiosity(triangles, materials, lights, domain, soil_reflectance,
     else:
         sensor_str = sensor_string(sensors)
         raise NotImplementedError(
-            'virtual sensors are not operational for mixed_radiosity')
+            "virtual sensors are not operational for mixed_radiosity"
+        )
 
-    algo = Caribu(canfile=can_string,
-                  skyfile=sky_string,
-                  optfiles=o_string,
-                  patternfile=pattern_str,
-                  sensorfile=sensor_str,
-                  direct=False,
-                  infinitise=True,
-                  nb_layers=layers,
-                  can_height=height,
-                  sphere_diameter=diameter,
-                  projection_image_size=screen_size,
-                  resdir=None, resfile=None, debug=debug)
+    algo = Caribu(
+        canfile=can_string,
+        skyfile=sky_string,
+        optfiles=o_string,
+        patternfile=pattern_str,
+        sensorfile=sensor_str,
+        direct=False,
+        infinitise=True,
+        nb_layers=layers,
+        can_height=height,
+        sphere_diameter=diameter,
+        projection_image_size=screen_size,
+        resdir=None,
+        resfile=None,
+        debug=debug,
+    )
     algo.run()
-    out = algo.nrj['band0']['data']
-    out['Ei'] = get_incident(out['Eabs'], materials)
+    out = algo.nrj["band0"]["data"]
+    out["Ei"] = get_incident(out["Eabs"], materials)
     if sensors is not None:
-        out['sensors'] = algo.measures['band0']
+        out["sensors"] = algo.measures["band0"]
 
     return out
 
 
-def x_mixed_radiosity(triangles, materials, lights, domain, soil_reflectance,
-                      diameter, layers, height, sensors=None, screen_size=1536, debug=False):
+def x_mixed_radiosity(
+    triangles,
+    materials,
+    lights,
+    domain,
+    soil_reflectance,
+    diameter,
+    layers,
+    height,
+    sensors=None,
+    screen_size=1536,
+    debug=False,
+):
     """Compute multi-chromatic illumination of triangles using mixed-radiosity model.
 
     Args:
@@ -552,10 +626,10 @@ def x_mixed_radiosity(triangles, materials, lights, domain, soil_reflectance,
           - Ei_sup (float): the surfacic density of energy incoming on the superior face of the triangle
           - sensor (dict): a dict with id, area, surfacic density of incoming
             direct energy and surfacic density of incoming total energy of sensors, if any
-   """
+    """
 
     if len(triangles) <= 1:
-        raise ValueError('Radiosity method needs at least two primitives')
+        raise ValueError("Radiosity method needs at least two primitives")
 
     opt_strings, labels = x_opt_strings_and_labels(materials, soil_reflectance)
     can_string = triangles_string(triangles, labels)
@@ -566,24 +640,29 @@ def x_mixed_radiosity(triangles, materials, lights, domain, soil_reflectance,
     else:
         sensor_str = sensor_string(sensors)
         raise NotImplementedError(
-            'virtual sensors are not operational for mixed_radiosity')
+            "virtual sensors are not operational for mixed_radiosity"
+        )
 
-    caribu = Caribu(canfile=can_string,
-                    skyfile=sky_string,
-                    optfiles=list(opt_strings.values()),
-                    optnames=list(opt_strings.keys()),
-                    patternfile=pattern_str,
-                    sensorfile=sensor_str,
-                    direct=False,
-                    infinitise=True,
-                    nb_layers=layers,
-                    can_height=height,
-                    sphere_diameter=diameter,
-                    projection_image_size=screen_size,
-                    resdir=None, resfile=None, debug=debug)
+    caribu = Caribu(
+        canfile=can_string,
+        skyfile=sky_string,
+        optfiles=list(opt_strings.values()),
+        optnames=list(opt_strings.keys()),
+        patternfile=pattern_str,
+        sensorfile=sensor_str,
+        direct=False,
+        infinitise=True,
+        nb_layers=layers,
+        can_height=height,
+        sphere_diameter=diameter,
+        projection_image_size=screen_size,
+        resdir=None,
+        resfile=None,
+        debug=debug,
+    )
     caribu.run()
-    out = {k: v['data'] for k, v in caribu.nrj.items()}
+    out = {k: v["data"] for k, v in caribu.nrj.items()}
     for band in out:
-        out[band]['Ei'] = get_incident(out[band]['Eabs'], materials[band])
+        out[band]["Ei"] = get_incident(out[band]["Eabs"], materials[band])
 
     return out

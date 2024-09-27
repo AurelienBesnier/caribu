@@ -9,11 +9,9 @@
 #       WebSite : https://github.com/openalea-incubator/caribu
 #
 # ==============================================================================
-""" Adaptor for PlantGL object and derived
-"""
-import numpy
-import openalea.plantgl.all as pgl
+"""Adaptor for PlantGL object and derived"""
 
+import openalea.plantgl.all as pgl
 
 
 def pgl_to_triangles(pgl_object, tesselator=None):
@@ -24,12 +22,13 @@ def pgl_to_triangles(pgl_object, tesselator=None):
     mesh = tesselator.triangulation
     if mesh:
         indices = mesh.indexList
-        pts = list(map(tuple,mesh.pointList))
-        triangles = [(pts[itri[0]],pts[itri[1]],pts[itri[2]]) for itri in indices]
+        pts = list(map(tuple, mesh.pointList))
+        triangles = [(pts[itri[0]], pts[itri[1]], pts[itri[2]]) for itri in indices]
     return triangles
 
+
 def scene_to_cscene(scene):
-    """ Build a caribu-compatible scene from a PlantGl scene
+    """Build a caribu-compatible scene from a PlantGl scene
 
     Args:
         scene: an openalea.plantgl.all.Scene instance
@@ -40,16 +39,24 @@ def scene_to_cscene(scene):
 
     """
     import itertools
+
     cscene = {}
     tesselator = pgl.Tesselator()
     for pid, pgl_objects in scene.todict().items():
-        tri_list = list(itertools.chain(*[pgl_to_triangles(pgl_object, tesselator) for pgl_object in pgl_objects]))
+        tri_list = list(
+            itertools.chain(
+                *[
+                    pgl_to_triangles(pgl_object, tesselator)
+                    for pgl_object in pgl_objects
+                ]
+            )
+        )
         if len(tri_list) > 0:
             cscene[pid] = tri_list
     return cscene
 
 
-def mtg_to_cscene(g, property_name='geometry'):
+def mtg_to_cscene(g, property_name="geometry"):
     """Build a caribu-compatible scene from a mtg encoding geometries
 
     Args:

@@ -1,17 +1,22 @@
 import sys
 from mock import Mock as MagicMock
 
+
 class Mock(MagicMock):
     @classmethod
     def __getattr__(cls, name):
-            return Mock()
+        return Mock()
 
-MOCK_MODULES = ['scipy',
 
-                'openalea',
-                'openalea.core',
-                'openalea.mtg', 'openalea.mtg.mtg',
-                'openalea.plantgl', 'openalea.plantgl.all']
+MOCK_MODULES = [
+    "scipy",
+    "openalea",
+    "openalea.core",
+    "openalea.mtg",
+    "openalea.mtg.mtg",
+    "openalea.plantgl",
+    "openalea.plantgl.all",
+]
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 # {# pkglts, sphinx
@@ -59,17 +64,17 @@ sys.path.insert(0, src_dir)
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.doctest',
-    'sphinx.ext.graphviz',
-    'sphinx.ext.ifconfig',
-    'sphinx.ext.inheritance_diagram',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.napoleon',
-    'sphinx.ext.todo',
-    'sphinx.ext.viewcode'
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.doctest",
+    "sphinx.ext.graphviz",
+    "sphinx.ext.ifconfig",
+    "sphinx.ext.inheritance_diagram",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.todo",
+    "sphinx.ext.viewcode",
 ]
 
 # try to add more extensions which are not default
@@ -78,32 +83,34 @@ extensions = [
 
 try:
     import matplotlib.sphinxext.plot_directive
-    extensions.append('matplotlib.sphinxext.plot_directive')
+
+    extensions.append("matplotlib.sphinxext.plot_directive")
 except ImportError:
     pass
 
 # default settings that can be redefined outside of the pkglts block
 todo_include_todos = True
 autosummary_generate = True
-intersphinx_mapping = {'python': ('https://docs.python.org/3.4', None)}
-inheritance_node_attrs = dict(shape='ellipse', fontsize=12,
-                              color='orange', style='filled')
+intersphinx_mapping = {"python": ("https://docs.python.org/3.4", None)}
+inheritance_node_attrs = dict(
+    shape="ellipse", fontsize=12, color="orange", style="filled"
+)
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # The suffix of source filenames.
-source_suffix = '.rst'
+source_suffix = ".rst"
 
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = "index"
 
 # General information about the project.
-project = u'alinea.caribu'
-copyright = u'2015, alinea.caribu'
+project = "alinea.caribu"
+copyright = "2015, alinea.caribu"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -133,7 +140,7 @@ release = pkgver["__version__"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['build', 'dist']
+exclude_patterns = ["build", "dist"]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -151,7 +158,7 @@ exclude_patterns = ['build', 'dist']
 # show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = "sphinx"
 
 # A list of ignored prefixes for module index sorting.
 # modindex_common_prefix = []
@@ -165,7 +172,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'default'
+html_theme = "default"
 
 # Theme options are theme-specific and customize the look and feel of a
 # theme further.  For a list of options available for each theme, see the
@@ -196,7 +203,7 @@ html_theme = 'default'
 # here, relative to this directory. They are copied after the builtin
 # static files, so a file named "default.css" will overwrite the builtin
 # "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page
 # bottom, using the given strftime format.
@@ -242,7 +249,7 @@ html_static_path = ['_static']
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'caribudoc'
+htmlhelp_basename = "caribudoc"
 
 
 # -- Options for LaTeX output ------------------------------------------
@@ -250,10 +257,8 @@ htmlhelp_basename = 'caribudoc'
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     # 'papersize': 'letterpaper',
-
     # The font size ('10pt', '11pt' or '12pt').
     # 'pointsize': '10pt',
-
     # Additional stuff for the LaTeX preamble.
     # 'preamble': '',
 }
@@ -262,9 +267,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto/manual]).
 latex_documents = [
-    ('index', 'caribu.tex',
-     u'caribu Documentation',
-     u'Christian Fournier', 'manual'),
+    ("index", "caribu.tex", "caribu Documentation", "Christian Fournier", "manual"),
 ]
 
 # The name of an image file (relative to this directory) to place at
@@ -292,11 +295,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    ('index', 'caribu',
-     u'caribu Documentation',
-     [u'Christian Fournier'], 1)
-]
+man_pages = [("index", "caribu", "caribu Documentation", ["Christian Fournier"], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
@@ -308,12 +307,15 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'caribu',
-     u'caribu Documentation',
-     u'Christian Fournier',
-     'caribu',
-     'Python/Visualea interface to Caribu Light model',
-     'Miscellaneous'),
+    (
+        "index",
+        "caribu",
+        "caribu Documentation",
+        "Christian Fournier",
+        "caribu",
+        "Python/Visualea interface to Caribu Light model",
+        "Miscellaneous",
+    ),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -342,7 +344,7 @@ destdir = os.path.abspath(os.path.join(project_root, "doc", "_dvlpt"))
 if not os.path.isdir(destdir):
     os.makedirs(destdir)
 
-main(['-e', '-o', destdir, '-d', '4', '-s', source_suffix[1:], '--force', src_dir])
+main(["-e", "-o", destdir, "-d", "4", "-s", source_suffix[1:], "--force", src_dir])
 
 
 # #}

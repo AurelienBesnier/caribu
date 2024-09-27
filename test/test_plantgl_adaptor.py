@@ -6,7 +6,6 @@ except ImportError:
     run_test = False
 
 if run_test:
-
     from alinea.caribu.plantgl_adaptor import scene_to_cscene, mtg_to_cscene
 
     def test_scene():
@@ -30,15 +29,14 @@ if run_test:
         assert len(css[0][0]) == 3
         return cs
 
-
     def test_mtg():
         g = MTG()
         cs = mtg_to_cscene(g)
         assert cs == {}
-        g.add_property('geometry')
+        g.add_property("geometry")
         cs = mtg_to_cscene(g)
         assert cs == {}
-        geom = g.property('geometry')
+        geom = g.property("geometry")
         geom[0] = pgl.Sphere()
         cs = mtg_to_cscene(g)
         assert len(cs) == 1

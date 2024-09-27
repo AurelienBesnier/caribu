@@ -13,30 +13,53 @@ from alinea.caribu.caribu import opt_string_and_labels, triangles_string
 cdoc = CaribuScene()
 
 
-def newCaribuScene(scene=None, light=[(1, (0, 0, -1))], pattern=None,
-                   opt={'band1': (0.06, 0.07)},
-                   soil_reflectance={'band1': 0.15},
-                   soil_mesh=-1, z_soil=0., scene_unit='cm'):
+def newCaribuScene(
+    scene=None,
+    light=[(1, (0, 0, -1))],
+    pattern=None,
+    opt={"band1": (0.06, 0.07)},
+    soil_reflectance={"band1": 0.15},
+    soil_mesh=-1,
+    z_soil=0.0,
+    scene_unit="cm",
+):
     # backward compatibility for opt file
     if isinstance(opt, str):
         opt = [opt]
-    return CaribuScene(scene=scene, light=light, pattern=pattern, opt=opt,
-                     soil_reflectance=soil_reflectance, soil_mesh=soil_mesh,
-                     z_soil=z_soil, scene_unit=scene_unit)
+    return CaribuScene(
+        scene=scene,
+        light=light,
+        pattern=pattern,
+        opt=opt,
+        soil_reflectance=soil_reflectance,
+        soil_mesh=soil_mesh,
+        z_soil=z_soil,
+        scene_unit=scene_unit,
+    )
+
+
 newCaribuScene.__doc__ = cdoc.__init__.__doc__
 
 
-def runCaribu(caribuscene, direct=True,
-              scatterOpt={'d_sphere': 0.5, 'layers': 5, 'height': None},
-              infinite=False, screen_size=1536, split_face=False,
-              simplify=True):
+def runCaribu(
+    caribuscene,
+    direct=True,
+    scatterOpt={"d_sphere": 0.5, "layers": 5, "height": None},
+    infinite=False,
+    screen_size=1536,
+    split_face=False,
+    simplify=True,
+):
     if caribuscene is None:
         return None, {}, {}
     d_sphere, layers, height = None, None, None
     if not direct:
         try:
-            d_sphere, layers, height = scatterOpt['d_sphere'], scatterOpt['layers'], \
-                                   scatterOpt['height']
+            d_sphere, layers, height = (
+                scatterOpt["d_sphere"],
+                scatterOpt["layers"],
+                scatterOpt["height"],
+            )
         except KeyError:
             raise KeyError("""keys of scatterOptions have changed,
             please rename input dict keys as follow:
@@ -44,27 +67,38 @@ def runCaribu(caribuscene, direct=True,
             - Nz -> layers
             - Zmax -> height""")
 
-    raw, aggregated = caribuscene.run(direct=direct, infinite=infinite,
-                                        d_sphere=d_sphere, layers=layers,
-                                        height=height, screen_size=screen_size,
-                                        split_face=split_face,
-                                        simplify=simplify)
+    raw, aggregated = caribuscene.run(
+        direct=direct,
+        infinite=infinite,
+        d_sphere=d_sphere,
+        layers=layers,
+        height=height,
+        screen_size=screen_size,
+        split_face=split_face,
+        simplify=simplify,
+    )
     return caribuscene, aggregated, raw
+
+
 runCaribu.__doc__ = cdoc.run.__doc__
 
 
 def getIncidentEnergy(caribuscene):
-        return caribuscene.getIncidentEnergy()
+    return caribuscene.getIncidentEnergy()
+
+
 getIncidentEnergy.__doc__ = cdoc.getIncidentEnergy.__doc__
 
 
 def getSoilEnergy(caribuscene):
-        return caribuscene.getSoilEnergy()
+    return caribuscene.getSoilEnergy()
+
+
 getIncidentEnergy.__doc__ = cdoc.getSoilEnergy.__doc__
 
 
-def selectOutput(output, variable='Ei', band=None):
-    """ select an output of Caribu
+def selectOutput(output, variable="Ei", band=None):
+    """select an output of Caribu
 
     Args:
         output: a caribu output (raw or aggregated)
@@ -94,6 +128,7 @@ def selectOutput(output, variable='Ei', band=None):
             pass
     return output[variable], variable
 
+
 def ViewMapOnCan(caribuscene, property, gamma=None, minval=None, maxval=None):
     """
 
@@ -115,48 +150,48 @@ def ViewMapOnCan(caribuscene, property, gamma=None, minval=None, maxval=None):
     scene, values = caribuscene.plot(property, minval, maxval, gamma, display=True)
     return caribuscene, scene, values
 
- 
- 
+
 def WriteCan(caribuscene, filename):
     triangles, groups, materials, bands, albedo = caribuscene.as_primitive()
     if len(bands) == 1:
         o_string, labels = opt_string_and_labels(materials)
         can_string = triangles_string(triangles, labels)
-        with open(filename, 'w') as output:
+        with open(filename, "w") as output:
             output.write(can_string)
     return filename
-
-
 
 
 def periodise(cs):
     cs.runPeriodise()
     return cs
-periodise.__doc__ =cdoc.runPeriodise.__doc__
 
-   
+
+periodise.__doc__ = cdoc.runPeriodise.__doc__
+
+
 def generate_scene_node(caribuscene, colors):
     return generate_scene(caribuscene.scene, colors)
 
 
 def PARaggregators(aggregated_output):
-    """    returns a dict of aggregators (0/1) for summing Ei at different levels
-    """
+    """returns a dict of aggregators (0/1) for summing Ei at different levels"""
 
-    out = aggregated_output['Ei']
-    aggregators = { 'Total' : [1] * len(caribu_outdict['Plt']),
-            'Green' : [(x == 1) for x in caribu_outdict['Opt']],
-            'Stem' :  [(x[0] == 0) and (x[1] == 1) for x in zip(caribu_outdict['Opak'],caribu_outdict['Opt'])],
-            'Leaves' :  [(x[0] != 0) and (x[1] == 1) for x in zip(caribu_outdict['Opak'],caribu_outdict['Opt'])],
-            'Soil' :  [x == 0 for x in caribu_outdict['Opt']]}
+    out = aggregated_output["Ei"]
+    aggregators = {
+        "Total": [1] * len(caribu_outdict["Plt"]),
+        "Green": [(x == 1) for x in caribu_outdict["Opt"]],
+        "Stem": [
+            (x[0] == 0) and (x[1] == 1)
+            for x in zip(caribu_outdict["Opak"], caribu_outdict["Opt"])
+        ],
+        "Leaves": [
+            (x[0] != 0) and (x[1] == 1)
+            for x in zip(caribu_outdict["Opak"], caribu_outdict["Opt"])
+        ],
+        "Soil": [x == 0 for x in caribu_outdict["Opt"]],
+    }
 
     # write the node code here.
 
-
     # return outputs
     return aggregators
-
-
-
-
-

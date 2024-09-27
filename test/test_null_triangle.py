@@ -12,11 +12,11 @@ def test_raycasting_null_triangle_superposed_points():
 
     res = raycasting(triangles, mats, lights)
 
-    assert_almost_equal(res['area'][0], 0, 3)
-    assert isnan(res['Ei'][0])
-    assert isnan(res['Eabs'][0])
-    assert isnan(res['Ei_sup'][0])
-    assert isnan(res['Ei_inf'][0])
+    assert_almost_equal(res["area"][0], 0, 3)
+    assert isnan(res["Ei"][0])
+    assert isnan(res["Eabs"][0])
+    assert isnan(res["Ei_sup"][0])
+    assert isnan(res["Ei_inf"][0])
 
 
 def test_raycasting_null_triangle_aligned_points():
@@ -27,11 +27,11 @@ def test_raycasting_null_triangle_aligned_points():
 
     res = raycasting(triangles, mats, lights)
 
-    assert_almost_equal(res['area'][0], 0, 3)
-    assert isnan(res['Ei'][0])
-    assert isnan(res['Eabs'][0])
-    assert isnan(res['Ei_sup'][0])
-    assert isnan(res['Ei_inf'][0])
+    assert_almost_equal(res["area"][0], 0, 3)
+    assert isnan(res["Ei"][0])
+    assert isnan(res["Eabs"][0])
+    assert isnan(res["Ei_sup"][0])
+    assert isnan(res["Ei_inf"][0])
 
 
 def test_raycasting_null_triangle_too_small():
@@ -42,11 +42,11 @@ def test_raycasting_null_triangle_too_small():
 
     res = raycasting(triangles, mats, lights)
 
-    assert_almost_equal(res['area'][0], 0, 3)
-    assert isnan(res['Ei'][0])
-    assert isnan(res['Eabs'][0])
-    assert isnan(res['Ei_sup'][0])
-    assert isnan(res['Ei_inf'][0])
+    assert_almost_equal(res["area"][0], 0, 3)
+    assert isnan(res["Ei"][0])
+    assert isnan(res["Eabs"][0])
+    assert isnan(res["Ei_sup"][0])
+    assert isnan(res["Ei_inf"][0])
 
 
 def test_raycasting_two_triangles_one_null():
@@ -59,11 +59,11 @@ def test_raycasting_two_triangles_one_null():
     lights = [(100, (0, 0, -1))]
     res = raycasting(triangles, mats, lights)
 
-    assert_almost_equal(res['area'][0], 1, 3)
-    assert_almost_equal(res['Ei'][0], 100, 0)
+    assert_almost_equal(res["area"][0], 1, 3)
+    assert_almost_equal(res["Ei"][0], 100, 0)
 
-    assert_almost_equal(res['area'][1], 0, 3)
-    assert isnan(res['Ei'][1])
+    assert_almost_equal(res["area"][1], 0, 3)
+    assert isnan(res["Ei"][1])
 
 
 def test_raycasting_infinite_null_triangle_inside_domain():
@@ -77,11 +77,11 @@ def test_raycasting_infinite_null_triangle_inside_domain():
     res = raycasting(triangles, mats, lights, domain)
     print(res)
 
-    assert_almost_equal(res['area'][0], 0.5, 3)
-    assert_almost_equal(res['Ei'][0], 100, 0)
+    assert_almost_equal(res["area"][0], 0.5, 3)
+    assert_almost_equal(res["Ei"][0], 100, 0)
 
-    assert_almost_equal(res['area'][1], 0, 3)
-    assert isnan(res['Ei'][1])
+    assert_almost_equal(res["area"][1], 0, 3)
+    assert isnan(res["Ei"][1])
 
 
 def test_raycasting_infinite_null_triangle_outside_domain():
@@ -94,11 +94,11 @@ def test_raycasting_infinite_null_triangle_outside_domain():
 
     res = raycasting(triangles, mats, lights, domain)
 
-    assert_almost_equal(res['area'][0], 0.5, 3)
-    assert_almost_equal(res['Ei'][0], 100, 0)
+    assert_almost_equal(res["area"][0], 0.5, 3)
+    assert_almost_equal(res["Ei"][0], 100, 0)
 
-    assert_almost_equal(res['area'][1], 0, 3)
-    assert isnan(res['Ei'][1])
+    assert_almost_equal(res["area"][1], 0, 3)
+    assert isnan(res["Ei"][1])
 
 
 def test_radiosity_two_triangles_one_null():
@@ -110,11 +110,11 @@ def test_radiosity_two_triangles_one_null():
 
     res = radiosity(triangles, mats, lights)
 
-    assert_almost_equal(res['area'][0], 0.5, 3)
-    assert_almost_equal(res['Ei'][0], 100, 0)
+    assert_almost_equal(res["area"][0], 0.5, 3)
+    assert_almost_equal(res["Ei"][0], 100, 0)
 
-    assert_almost_equal(res['area'][1], 0, 3)
-    assert isnan(res['Ei'][1])
+    assert_almost_equal(res["area"][1], 0, 3)
+    assert isnan(res["Ei"][1])
 
 
 def test_mixed_radiosity_two_triangles_one_null():
@@ -128,10 +128,12 @@ def test_mixed_radiosity_two_triangles_one_null():
     diameter = 1
     layers, height = 2, 1
 
-    res = mixed_radiosity(triangles, mats, lights, domain, soil_reflectance, diameter, layers, height)
+    res = mixed_radiosity(
+        triangles, mats, lights, domain, soil_reflectance, diameter, layers, height
+    )
 
-    assert_almost_equal(res['area'][0], 0.5, 3)
-    assert_almost_equal(res['Ei'][0], 100, 0)
+    assert_almost_equal(res["area"][0], 0.5, 3)
+    assert_almost_equal(res["Ei"][0], 100, 0)
 
-    assert_almost_equal(res['area'][1], 0, 3)
-    assert isnan(res['Ei'][1])
+    assert_almost_equal(res["area"][1], 0, 3)
+    assert isnan(res["Ei"][1])

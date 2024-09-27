@@ -13,9 +13,9 @@ def test_triangle_inside():
     lights = [(100, (0, 0, -1))]
     res = raycasting(triangles, mats, lights, domain)
 
-    assert_almost_equal(res['area'][0], 0.5, 3)
-    assert_almost_equal(res['Ei_sup'][0], 100, 0)
-    assert_almost_equal(res['Ei_inf'][0], 0, 3)
+    assert_almost_equal(res["area"][0], 0.5, 3)
+    assert_almost_equal(res["Ei_sup"][0], 100, 0)
+    assert_almost_equal(res["Ei_inf"][0], 0, 3)
 
 
 def test_triangle_outside():
@@ -28,33 +28,33 @@ def test_triangle_outside():
     domain = (-2, -2, 0, 2)
     res = raycasting(triangles, mats, lights, domain)
 
-    assert_almost_equal(res['area'][0], 0.5, 3)
-    assert_almost_equal(res['Ei_sup'][0], 100, 0)
-    assert_almost_equal(res['Ei_inf'][0], 0, 3)
+    assert_almost_equal(res["area"][0], 0.5, 3)
+    assert_almost_equal(res["Ei_sup"][0], 100, 0)
+    assert_almost_equal(res["Ei_inf"][0], 0, 3)
 
     # just on the left
     domain = (2, -2, 4, 2)
     res = raycasting(triangles, mats, lights, domain)
 
-    assert_almost_equal(res['area'][0], 0.5, 3)
-    assert_almost_equal(res['Ei_sup'][0], 100, 0)
-    assert_almost_equal(res['Ei_inf'][0], 0, 3)
+    assert_almost_equal(res["area"][0], 0.5, 3)
+    assert_almost_equal(res["Ei_sup"][0], 100, 0)
+    assert_almost_equal(res["Ei_inf"][0], 0, 3)
 
     # further on the left
     domain = (12, -2, 14, 2)
     res = raycasting(triangles, mats, lights, domain)
 
-    assert_almost_equal(res['area'][0], 0.5, 3)
-    assert_almost_equal(res['Ei_sup'][0], 100, 0)
-    assert_almost_equal(res['Ei_inf'][0], 0, 3)
+    assert_almost_equal(res["area"][0], 0.5, 3)
+    assert_almost_equal(res["Ei_sup"][0], 100, 0)
+    assert_almost_equal(res["Ei_inf"][0], 0, 3)
 
     # both directions
     domain = (12, 12, 14, 14)
     res = raycasting(triangles, mats, lights, domain)
 
-    assert_almost_equal(res['area'][0], 0.5, 3)
-    assert_almost_equal(res['Ei_sup'][0], 100, 0)
-    assert_almost_equal(res['Ei_inf'][0], 0, 3)
+    assert_almost_equal(res["area"][0], 0.5, 3)
+    assert_almost_equal(res["Ei_sup"][0], 100, 0)
+    assert_almost_equal(res["Ei_inf"][0], 0, 3)
 
 
 # def test_with_splitting():

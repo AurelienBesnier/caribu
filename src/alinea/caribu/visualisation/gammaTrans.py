@@ -1,9 +1,9 @@
 from math import *
 from numpy import array
 
-def gammaTrans(values, gamma=1,minval =None,maxval=None):
-    '''    return value normalised and raised at exponent gamma
-    '''
+
+def gammaTrans(values, gamma=1, minval=None, maxval=None):
+    """return value normalised and raised at exponent gamma"""
     values = array(values)
 
     if minval is None:
@@ -16,10 +16,10 @@ def gammaTrans(values, gamma=1,minval =None,maxval=None):
     else:
         M = maxval
 
-    if (m == M) :
-        norm = 1.
+    if m == M:
+        norm = 1.0
     else:
         norm = M - m
-    res = ((values - m) / float(norm))**gamma
+    res = ((values - m) / float(norm)) ** gamma
 
-    return res,
+    return (res,)

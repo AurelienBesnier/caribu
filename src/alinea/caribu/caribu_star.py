@@ -15,9 +15,10 @@ from alinea.caribu.light import turtle
 
 
 def _caribu_call(scene, directions, opt=None, domain=None, convUnit=None):
-    """ adaptor for backward compatibility of macros calling caribu
-    """
-    energie, emission, direction, elevation, azimuth = turtle(sectors=str(directions), energy=1)
+    """adaptor for backward compatibility of macros calling caribu"""
+    energie, emission, direction, elevation, azimuth = turtle(
+        sectors=str(directions), energy=1
+    )
     sources = list(zip(energie, direction))
 
     c_scene = CaribuScene(scene=scene, light=sources, opt=opt, pattern=domain)
@@ -34,14 +35,15 @@ def _caribu_call(scene, directions, opt=None, domain=None, convUnit=None):
 
 
 def caribu_lighted_scene(scene, directions=1, domain=None, minval=None, maxval=None):
-    """ generate a per-triangle colored lighted scene  (like ViewMapOnCan)
-    """
+    """generate a per-triangle colored lighted scene  (like ViewMapOnCan)"""
     c_scene, out, _ = _caribu_call(scene, str(directions), domain=domain)
-    ei = out['Ei']
+    ei = out["Ei"]
     return c_scene.plot(ei, minval=minval, maxval=maxval, display=False)
 
 
-def caribu_star(scene_geometry, directions=1, output_by_triangle=False, domain=None, convUnit=0.01):
+def caribu_star(
+    scene_geometry, directions=1, output_by_triangle=False, domain=None, convUnit=0.01
+):
     """Compute exposition ('surface_viewed-to_area ratio and exposed surface(m2)') of scene elements from a given number
         of direction
 
@@ -58,68 +60,99 @@ def caribu_star(scene_geometry, directions=1, output_by_triangle=False, domain=N
 
     # TODO : check that sources are okay for star (energy of emisssion should be the one normalised)
 
-    c_scene, raw, aggregated = _caribu_call(scene_geometry, str(directions), domain=domain, convUnit=convUnit)
+    c_scene, raw, aggregated = _caribu_call(
+        scene_geometry, str(directions), domain=domain, convUnit=convUnit
+    )
     if output_by_triangle:
-        star = raw['Ei']
-        areas = raw['area']
-        exposed_area = {vid: [star[vid][i] * areas[vid][i] for i in range(len(areas[vid]))] for vid in areas}
+        star = raw["Ei"]
+        areas = raw["area"]
+        exposed_area = {
+            vid: [star[vid][i] * areas[vid][i] for i in range(len(areas[vid]))]
+            for vid in areas
+        }
     else:
-        star = aggregated['Ei']
-        areas = aggregated['area']
+        star = aggregated["Ei"]
+        areas = aggregated["area"]
         exposed_area = {vid: star[vid] * areas[vid] for vid in areas}
 
     return star, exposed_area
 
 
 def caribu_rain_star(g, output_by_triangle=False, domain=None, convUnit=0.01, dt=1):
-    geom = g.property('geometry')
-    rain_star, rain_exposed_area = caribu_star(geom, directions=1, output_by_triangle=output_by_triangle,
-                                               convUnit=convUnit, domain=domain)
-    if 'rain_exposed_area' not in g.properties():
-        g.add_property('rain_exposed_area')
-    if 'rain_star' not in g.properties():
-        g.add_property('rain_star')
-    g.property('rain_exposed_area').update(rain_exposed_area)
-    g.property('rain_star').update(rain_star)
+    geom = g.property("geometry")
+    rain_star, rain_exposed_area = caribu_star(
+        geom,
+        directions=1,
+        output_by_triangle=output_by_triangle,
+        convUnit=convUnit,
+        domain=domain,
+    )
+    if "rain_exposed_area" not in g.properties():
+        g.add_property("rain_exposed_area")
+    if "rain_star" not in g.properties():
+        g.add_property("rain_star")
+    g.property("rain_exposed_area").update(rain_exposed_area)
+    g.property("rain_star").update(rain_star)
     return g
 
 
-def caribu_light_star(g, light_sectors=16, output_by_triangle=False, domain=None, convUnit=0.01, trigger=1):
-    geom = g.property('geometry')
-    light_star, light_exposed_area = caribu_star(geom, directions=light_sectors, output_by_triangle=output_by_triangle,
-                                                 convUnit=convUnit, domain=domain)
-    if 'light_exposed_area' not in g.properties():
-        g.add_property('light_exposed_area')
-    if 'light_star' not in g.properties():
-        g.add_property('light_star')
-    g.property('light_exposed_area').update(light_exposed_area)
-    g.property('light_star').update(light_star)
+def caribu_light_star(
+    g, light_sectors=16, output_by_triangle=False, domain=None, convUnit=0.01, trigger=1
+):
+    geom = g.property("geometry")
+    light_star, light_exposed_area = caribu_star(
+        geom,
+        directions=light_sectors,
+        output_by_triangle=output_by_triangle,
+        convUnit=convUnit,
+        domain=domain,
+    )
+    if "light_exposed_area" not in g.properties():
+        g.add_property("light_exposed_area")
+    if "light_star" not in g.properties():
+        g.add_property("light_star")
+    g.property("light_exposed_area").update(light_exposed_area)
+    g.property("light_star").update(light_star)
     return g
 
 
-def rain_and_light_star(g, light_sectors=16, output_by_triangle=False, domain=None, convUnit=0.01, trigger=1):
-    geom = g.property('geometry')
-    rain_star, rain_exposed_area = caribu_star(geom, directions=light_sectors, output_by_triangle=output_by_triangle,
-                                               convUnit=convUnit, domain=domain)
+def rain_and_light_star(
+    g, light_sectors=16, output_by_triangle=False, domain=None, convUnit=0.01, trigger=1
+):
+    geom = g.property("geometry")
+    rain_star, rain_exposed_area = caribu_star(
+        geom,
+        directions=light_sectors,
+        output_by_triangle=output_by_triangle,
+        convUnit=convUnit,
+        domain=domain,
+    )
 
-    if not 'rain_exposed_area' in g.properties():
-        g.add_property('rain_exposed_area')
-    if not 'rain_star' in g.properties():
-        g.add_property('rain_star')
-    if not 'light_exposed_area' in g.properties():
-        g.add_property('light_exposed_area')
-    if not 'light_star' in g.properties():
-        g.add_property('light_star')
-    g.property('rain_exposed_area').update(rain_exposed_area)
-    g.property('light_exposed_area').update(light_exposed_area)
-    g.property('rain_star').update(rain_star)
-    g.property('light_star').update(light_star)
+    if not "rain_exposed_area" in g.properties():
+        g.add_property("rain_exposed_area")
+    if not "rain_star" in g.properties():
+        g.add_property("rain_star")
+    if not "light_exposed_area" in g.properties():
+        g.add_property("light_exposed_area")
+    if not "light_star" in g.properties():
+        g.add_property("light_star")
+    g.property("rain_exposed_area").update(rain_exposed_area)
+    g.property("light_exposed_area").update(light_exposed_area)
+    g.property("rain_star").update(rain_star)
+    g.property("light_star").update(light_star)
     return g
 
 
-def run_caribu(sources, scene, opticals='stem', optical_properties=None, output_by_triangle=False, domain=None,
-               zsoil=None):
-    """ 
+def run_caribu(
+    sources,
+    scene,
+    opticals="stem",
+    optical_properties=None,
+    output_by_triangle=False,
+    domain=None,
+    zsoil=None,
+):
+    """
     Calls Caribu for differents energy sources
 
     :Parameters:
@@ -129,7 +162,7 @@ def run_caribu(sources, scene, opticals='stem', optical_properties=None, output_
     - opticals : a list of optical property labels ('leaf', 'soil', 'stem', 'ear' or 'awn') for all shapes in scene. If a shorter opticale list is provided, it will be recycled to match eength of shape list
     - `optical_properties`: a filename (*.opt).
     - `output_by_triangle` (bool)
-        Default 'False'. Return is done by id of geometry. If 'True', return is done by triangle. 
+        Default 'False'. Return is done by id of geometry. If 'True', return is done by triangle.
 
     :Returns:
     ---------
@@ -139,7 +172,9 @@ def run_caribu(sources, scene, opticals='stem', optical_properties=None, output_
         A dict of intercepted variable (energy) per triangle
     """
 
-    raise DeprecationWarning('This function is deprecated, use CaribuScene / caribu_star instead')
+    raise DeprecationWarning(
+        "This function is deprecated, use CaribuScene / caribu_star instead"
+    )
 
     from alinea.caribu.label import simple_canlabel
     from alinea.caribu.file_adaptor import read_opt, build_materials
@@ -148,13 +183,20 @@ def run_caribu(sources, scene, opticals='stem', optical_properties=None, output_
     if not isinstance(opticals, list):
         opticals = [opticals]
     if len(opticals) < len(scene):
-        opticals = opticals * (len(scene) / len(opticals)) + [opticals[i] for i in range(len(scene) % len(opticals))]
+        opticals = opticals * (len(scene) / len(opticals)) + [
+            opticals[i] for i in range(len(scene) % len(opticals))
+        ]
     labels = [simple_canlabel(opt) for opt in opticals]
     materials = build_materials(labels, po, soil_reflectance)
     band = CaribuScene.default_band
 
-    c_scene = CaribuScene(scene=scene, light=sources, pattern=domain, opt={band: materials},
-                          soil_reflectance={band: soil_reflectance})
+    c_scene = CaribuScene(
+        scene=scene,
+        light=sources,
+        pattern=domain,
+        opt={band: materials},
+        soil_reflectance={band: soil_reflectance},
+    )
 
     ifty = False
     if domain is not None:

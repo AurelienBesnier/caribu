@@ -9,14 +9,14 @@
 #       WebSite : https://github.com/openalea-incubator/caribu
 #
 # ==============================================================================
-""" A colormap class
-    copied from  openalea.color.colormap because
-    import openalea.color.colormap makes matplotlib
-    with TkAgg frontend crash for some mysterious reason !!
+"""A colormap class
+copied from  openalea.color.colormap because
+import openalea.color.colormap makes matplotlib
+with TkAgg frontend crash for some mysterious reason !!
 """
 
 
-class ColorMap(object):
+class ColorMap:
     """A RGB color map, between 2 colors defined in HSV code
 
     :Examples:
@@ -29,7 +29,7 @@ class ColorMap(object):
 
     """
 
-    def __init__(self, minval=0., maxval=1.):
+    def __init__(self, minval=0.0, maxval=1.0):
         self.minval = float(minval)
         self.maxval = float(maxval)
 
@@ -39,7 +39,7 @@ class ColorMap(object):
         :param normedU: todo
 
         """
-        inter = 1 / 5.
+        inter = 1 / 5.0
         winter = int(normedU / inter)
         a = (normedU % inter) / inter
         b = 1 - a

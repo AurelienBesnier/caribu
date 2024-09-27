@@ -23,11 +23,9 @@ class CanestraDisplay(Node):
         Node.__init__(self)
 
         self.add_input(name="Canestra Scene")
-        self.add_input(name="plants", interface=IEnumStr(['all']), value='all')
-        self.add_input(name="optical species", interface=IEnumStr(['all']),
-                       value='all')
-        self.add_input(name="transparency", interface=IEnumStr(['all']),
-                       value='all')
+        self.add_input(name="plants", interface=IEnumStr(["all"]), value="all")
+        self.add_input(name="optical species", interface=IEnumStr(["all"]), value="all")
+        self.add_input(name="transparency", interface=IEnumStr(["all"]), value="all")
         self.add_input(name="color map", interface=IFunction)
 
         self.add_output(name="PlantGL scene")
@@ -44,12 +42,12 @@ class CanestraDisplay(Node):
             # update the enum str with new values
             self.can_scene = can_scene
 
-        # plant color 
+        # plant color
         # leaf, stem, soil
         # vertices
         if int(plant_id) not in pids:
-            plant_id = 'all'
+            plant_id = "all"
         if int(opt_id) not in oids:
-            opt_id = 'all'
+            opt_id = "all"
         if int(t_id) not in tids:
-            t_id = 'all'
+            t_id = "all"

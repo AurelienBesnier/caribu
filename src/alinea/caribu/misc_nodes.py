@@ -1,18 +1,15 @@
-""" Miscellaneous helper nodes used for building dataflows
-"""
+"""Miscellaneous helper nodes used for building dataflows"""
+
 from functools import reduce
 
 
-
-
 def reduceDict(dictlist):
-    """ Bind dict that share the same keys and whose values are lists
-    """
+    """Bind dict that share the same keys and whose values are lists"""
 
     def _bind(d, e):
         vals = []
         for k in d:
-            if (isinstance(d[k], list)):
+            if isinstance(d[k], list):
                 nl = d[k]
             else:
                 nl = [d[k]]
@@ -36,7 +33,6 @@ def filterby(indices, values, condition):
 
 
 def mydict(list_of_tuple):
-    """ create a dict from a list of tuples
-    """
+    """create a dict from a list of tuples"""
     d = dict(list_of_tuple)
     return d

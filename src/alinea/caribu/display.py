@@ -9,8 +9,8 @@
 #       WebSite : https://github.com/openalea-incubator/caribu
 #
 # ==============================================================================
-""" 3D display of caribu objects
-"""
+"""3D display of caribu objects"""
+
 import matplotlib as mpl
 from matplotlib import pyplot
 
@@ -32,20 +32,17 @@ def nan_to_zero(values):
 
 
 def plot_color_scale(values, minval=None, maxval=None, label=None):
-    """    Produce an plot of a colorscale
-    """
+    """Produce an plot of a colorscale"""
     # Make a figure and axes with dimensions as desired.
     fig = pyplot.figure(figsize=(8, 1.5))
-    ax1 = fig.add_axes([0.05, 0.4, 0.9, .5])
+    ax1 = fig.add_axes([0.05, 0.4, 0.9, 0.5])
     if minval is None:
         minval = min(values)
     if maxval is None:
         maxval = max(values)
     cmap = mpl.cm.jet
     norm = mpl.colors.Normalize(vmin=minval, vmax=maxval)
-    cb1 = mpl.colorbar.ColorbarBase(ax1, cmap=cmap,
-                                    norm=norm,
-                                    orientation='horizontal')
+    cb1 = mpl.colorbar.ColorbarBase(ax1, cmap=cmap, norm=norm, orientation="horizontal")
     cb1.set_label(label)
     fig.show()
 
@@ -70,11 +67,11 @@ def jet_colors(values, minval=None, maxval=None):
     if maxval is None:
         maxval = max(values)
     cmap = ColorMap()
-    return [cmap(x, minval, maxval, 250., 20.) for x in values]
+    return [cmap(x, minval, maxval, 250.0, 20.0) for x in values]
 
 
 def generate_scene(triangle_scene, colors=None, soil=None, soil_colors=None):
-    """ Build a colored PlantGL scene
+    """Build a colored PlantGL scene
 
     Args:
         triangle_scene: (dict of list of list of tuples) a {primitive_id: [triangles, ]} dict,
@@ -95,7 +92,10 @@ def generate_scene(triangle_scene, colors=None, soil=None, soil_colors=None):
     if colors is None:
         colors = {k: [plant_color] * len(triangle_scene[k]) for k in triangle_scene}
     else:
-        colors = {k: colors.get(k, [missing_color] * len(triangle_scene[k])) for k in triangle_scene}
+        colors = {
+            k: colors.get(k, [missing_color] * len(triangle_scene[k]))
+            for k in triangle_scene
+        }
 
     for k, triangles in triangle_scene.items():
         shape = pgl.TriangleSet([], [])
@@ -129,6 +129,5 @@ def generate_scene(triangle_scene, colors=None, soil=None, soil_colors=None):
             shape.colorList.append(pgl.Color4(r, g, b, 0))
 
         scene += shape
-
 
     return scene

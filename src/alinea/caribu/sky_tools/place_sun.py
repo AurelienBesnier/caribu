@@ -1,11 +1,11 @@
 from . import Sky
 
-class place_sun(object):
-    """  Doc... """ 
+
+class place_sun:
+    """Doc..."""
 
     def __init__(self):
         pass
-
 
     def __call__(self, nbp, nbt, sun):
         s = Sky.Sky(nbp, nbt)

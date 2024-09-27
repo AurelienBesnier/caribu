@@ -11,7 +11,7 @@
 # ==============================================================================
 
 # {# pkglts, data
-""" Set of function to work with resources that are located inside
+"""Set of function to work with resources that are located inside
 this package data
 """
 
@@ -34,8 +34,8 @@ def get_data_dir():
     return pkg_data_dir
 
 
-def get(file_name, mode='r'):
-    """ Retrieve the content of a given filename
+def get(file_name, mode="r"):
+    """Retrieve the content of a given filename
     located in the data part of this package.
 
     args:
@@ -52,7 +52,7 @@ def get(file_name, mode='r'):
 
 
 def ls(dir_name):
-    """ List all files and directories in dir_name
+    """List all files and directories in dir_name
     located in the data part of this package.
 
     args:
@@ -65,5 +65,6 @@ def ls(dir_name):
     """
     pth = pj(pkg_data_dir, dir_name)
     return [(n, isdir(pj(pth, n))) for n in listdir(pth)]
+
 
 # #}

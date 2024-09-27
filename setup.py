@@ -12,8 +12,8 @@ from os.path import join as pj
 from setuptools import setup, find_namespace_packages
 
 short_descr = "Python/Visualea interface to Caribu Light model"
-readme = open('README.rst').read()
-history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+readme = open("README.rst").read()
+history = open("HISTORY.rst").read().replace(".. :changelog:", "")
 
 
 # find version number in src/alinea/caribu/version.py
@@ -28,10 +28,10 @@ nb = len(normpath(abspath("src/caribu_data"))) + 1
 
 
 def data_rel_pth(pth):
-    """ Return path relative to pkg_data
-    """
+    """Return path relative to pkg_data"""
     abs_pth = normpath(abspath(pth))
     return abs_pth[nb:]
+
 
 """
 for root, dnames, fnames in walk("src/caribu_data"):
@@ -40,39 +40,45 @@ for root, dnames, fnames in walk("src/caribu_data"):
 """
 
 setup_kwds = dict(
-    name='alinea.caribu',
+    name="alinea.caribu",
     version=version_caribu,
     description=short_descr,
-    long_description=readme + '\n\n' + history,
+    long_description=readme + "\n\n" + history,
     author="Christian Fournier, Michael Chelle, Christophe Pradal ",
     author_email="Christian.Fournier@supagro.inra.fr, michael.chelle@grignon.inra.fr, christophe dot pradal _at_ cirad fr ",
-    url='https://github.com/openalea-incubator/caribu',
-    license='INRA_License_agreement',
+    url="https://github.com/openalea-incubator/caribu",
+    license="INRA_License_agreement",
     zip_safe=False,
-
-    packages=find_namespace_packages(where='src', include=['alinea.*']),
-    package_dir={'': 'src'},
-
+    packages=find_namespace_packages(where="src", include=["alinea.*"]),
+    package_dir={"": "src"},
     include_package_data=True,
     package_data={},
     entry_points={},
-    keywords='openalea, FSPM, light',
-    #test_suite='nose.collector',
+    keywords="openalea, FSPM, light",
+    # test_suite='nose.collector',
 )
 # #}
 # change setup_kwds below before the next pkglts tag
 
-#setup_kwds['setup_requires'] = ['openalea.deploy']
+# setup_kwds['setup_requires'] = ['openalea.deploy']
 
-build_prefix = pj(abspath(dirname(__file__)),"build-scons")
-setup_kwds['scons_scripts'] = ['SConstruct']
-setup_kwds['bin_dirs'] = {'bin': build_prefix + '/bin'}
-setup_kwds['lib_dirs'] = {'lib' : build_prefix+'/lib' }
-setup_kwds['inc_dirs'] = { 'include' : build_prefix+'/include' }
-setup_kwds['entry_points']['wralea'] = ['alinea.caribu = alinea.caribu_wralea']
-setup_kwds['package_data'][''] = ['*.can', '*.R', '*.8', '*.opt', '*.light', '*.csv', '*.png']
+build_prefix = pj(abspath(dirname(__file__)), "build-scons")
+setup_kwds["scons_scripts"] = ["SConstruct"]
+setup_kwds["bin_dirs"] = {"bin": build_prefix + "/bin"}
+setup_kwds["lib_dirs"] = {"lib": build_prefix + "/lib"}
+setup_kwds["inc_dirs"] = {"include": build_prefix + "/include"}
+setup_kwds["entry_points"]["wralea"] = ["alinea.caribu = alinea.caribu_wralea"]
+setup_kwds["package_data"][""] = [
+    "*.can",
+    "*.R",
+    "*.8",
+    "*.opt",
+    "*.light",
+    "*.csv",
+    "*.png",
+]
 
-setup_kwds['setup_requires'] = ['openalea.deploy']
+setup_kwds["setup_requires"] = ["openalea.deploy"]
 
 # do not change things below
 # {# pkglts, pysetup.call

@@ -9,22 +9,24 @@
 #       WebSite : https://github.com/openalea-incubator/caribu
 #
 # ==============================================================================
-""" Chaine les appel de s2v, mcsail et canestra, comme le fait cpfg via caribu
-    Syntaxe: caribu.csh Ds file.light file.can nz h file.8 file1.opt ... fileN.opt
+"""Chaine les appel de s2v, mcsail et canestra, comme le fait cpfg via caribu
+  Syntaxe: caribu.csh Ds file.light file.can nz h file.8 file1.opt ... fileN.opt
 
-  Exemple /home/tld/chelle/QHS/Calgary/dev/Canestra/MC-SAIL/Test
-  caribu.csh 0.2 sky2.light Tout.can 3 18 Tout.8 test nir par
+Exemple /home/tld/chelle/QHS/Calgary/dev/Canestra/MC-SAIL/Test
+caribu.csh 0.2 sky2.light Tout.can 3 18 Tout.8 test nir par
 
-  MC98
-  C. Pradal - 2009
-  MC09
-  Contact: chelle@grinon.inra.fr
-  INRA - INRIA - CIRAD
+MC98
+C. Pradal - 2009
+MC09
+Contact: chelle@grinon.inra.fr
+INRA - INRIA - CIRAD
 """
+
 import os
 from subprocess import Popen, STDOUT, PIPE
 import tempfile
 import platform
+
 try:
     from path import Path
 except ImportError:
@@ -44,14 +46,12 @@ def _process(cmd, directory, out):
     """
     # print ">> caribu.py: process(%s) called..."%(cmd)
 
-    f = open(out, 'w')
-    if platform.system() == 'Darwin':
-        p = Popen(cmd, shell=True, cwd=directory,
-                  stdin=PIPE, stdout=f, stderr=PIPE)
+    f = open(out, "w")
+    if platform.system() == "Darwin":
+        p = Popen(cmd, shell=True, cwd=directory, stdin=PIPE, stdout=f, stderr=PIPE)
         status = p.communicate()
     else:
-        p = Popen(cmd, shell=True, cwd=directory,
-                  stdin=None, stdout=f, stderr=STDOUT)
+        p = Popen(cmd, shell=True, cwd=directory, stdin=None, stdout=f, stderr=STDOUT)
         status = p.wait()
 
     f.close()
@@ -81,11 +81,11 @@ def _abrev(fnc, maxlg=1):
         return str(fnc)
     lines = fnc.splitlines()
     if maxlg <= 1:
-        return lines[0] + ' ... '
+        return lines[0] + " ... "
     elif len(lines) <= maxlg:
         return str(fnc)
     else:
-        return '\n' + '\n'.join(lines[0:maxlg]) + "\n..."
+        return "\n" + "\n".join(lines[0:maxlg]) + "\n..."
 
 
 class CaribuError(Exception):
@@ -105,23 +105,24 @@ class CaribuRunError(CaribuError):
 
 
 class Caribu(object):
-    def __init__(self,
-                 canfile=None,
-                 skyfile=None,
-                 optfiles=None,
-                 patternfile=None,
-                 sensorfile=None,
-                 optnames=None,
-                 direct=True,
-                 infinitise=True,
-                 nb_layers=None,
-                 can_height=None,
-                 sphere_diameter=-1,
-                 debug=False,
-                 resdir="./Run",
-                 resfile=None,
-                 projection_image_size=1536
-                 ):
+    def __init__(
+        self,
+        canfile=None,
+        skyfile=None,
+        optfiles=None,
+        patternfile=None,
+        sensorfile=None,
+        optnames=None,
+        direct=True,
+        infinitise=True,
+        nb_layers=None,
+        can_height=None,
+        sphere_diameter=-1,
+        debug=False,
+        resdir="./Run",
+        resfile=None,
+        projection_image_size=1536,
+    ):
         """
         Class fo Nested radiosity illumination on a 3D scene.
 
@@ -150,7 +151,7 @@ class Caribu(object):
         self.my_dbg = debug
         # print "my_dbg = ",   self.my_dbg
         # tempdir (initialised to allow testing of  existence in del)
-        self.tempdir = Path('')
+        self.tempdir = Path("")
 
         # Input files
         self.scene = canfile
@@ -207,10 +208,24 @@ class Caribu(object):
             mcsail: %s
             periodise: %s
             s2v: %s
-        """ % (_abrev(self.scene), _abrev(self.sky), ' '.join(map(str, _safe_iter(self.optnames))),
-               ''.join(map(_abrev, _safe_iter(self.opticals))), self.pattern,_abrev(self.sensor),  self.infinity, self.direct,
-               self.nb_layers, self.can_height, self.sphere_diameter, self.form_factor, self.canestra_name,
-               self.sail_name, self.periodise_name, self.s2v_name)
+        """ % (
+            _abrev(self.scene),
+            _abrev(self.sky),
+            " ".join(map(str, _safe_iter(self.optnames))),
+            "".join(map(_abrev, _safe_iter(self.opticals))),
+            self.pattern,
+            _abrev(self.sensor),
+            self.infinity,
+            self.direct,
+            self.nb_layers,
+            self.can_height,
+            self.sphere_diameter,
+            self.form_factor,
+            self.canestra_name,
+            self.sail_name,
+            self.periodise_name,
+            self.s2v_name,
+        )
         if self.my_dbg:
             sopt = """
             -----------
@@ -220,7 +235,7 @@ class Caribu(object):
             resfile %s
             """ % (self.tempdir, self.resdir, self.resfile)
             s += sopt
-        return (s)
+        return s
 
     def show(self, titre="############"):
         print("\n>>> Caribu state in ", titre)
@@ -228,9 +243,15 @@ class Caribu(object):
         print("<<<<\n\n")
 
     def init(self):
-        if self.scene == None or self.sky == None or self.opticals == None or self.opticals == []:
+        if (
+            self.scene == None
+            or self.sky == None
+            or self.opticals == None
+            or self.opticals == []
+        ):
             raise CaribuOptionError(
-                "Caribu has not been fully initialized: scene, sky, and opticals have to be defined\n     =>  Caribu can not be run... - MC09")
+                "Caribu has not been fully initialized: scene, sky, and opticals have to be defined\n     =>  Caribu can not be run... - MC09"
+            )
 
         # print "infty, pattern", self.infinity, self.pattern
 
@@ -238,15 +259,20 @@ class Caribu(object):
             if self.sphere_diameter < 0:
                 # Compute classic radioity without toric scene
                 if self.infinity:
-                    raise CaribuOptionError("incompatible options for radiosity : sphere_diameter < 0 && infinity")
+                    raise CaribuOptionError(
+                        "incompatible options for radiosity : sphere_diameter < 0 && infinity"
+                    )
             else:  ## diameter >=0
                 # consider a toric canopy
                 if not self.infinity:
                     raise CaribuOptionError(
-                        "incompatible options for nested radiosity: no infinity &&  sphere_diameter >= 0 ")
+                        "incompatible options for nested radiosity: no infinity &&  sphere_diameter >= 0 "
+                    )
 
         if self.pattern == None and self.infinity:
-            raise CaribuOptionError('pattern not specified => Caribu canot infinitise the scene')
+            raise CaribuOptionError(
+                "pattern not specified => Caribu canot infinitise the scene"
+            )
 
         self.form_factor = True
         # self.canestra_1st = True # Boolean that indicates the first or not times, canestra is called thus form factors computed...
@@ -268,7 +294,7 @@ class Caribu(object):
                     name = str(Path(Path(opt).basename()).stripext())
                     optn.append(name)
                 else:
-                    optn.append('band%d' % (i))
+                    optn.append("band%d" % (i))
             self.optnames = optn
 
         # Working directory
@@ -278,15 +304,17 @@ class Caribu(object):
         self.copyfiles()
 
     def init_periodise(self):
-        """ init caribuscene for a periodise-only run. """
+        """init caribuscene for a periodise-only run."""
         if self.scene == None or self.pattern == None:
-            raise CaribuOptionError("Periodise has not been fully initialized: scene and pattern have to be defined")
+            raise CaribuOptionError(
+                "Periodise has not been fully initialized: scene and pattern have to be defined"
+            )
         self.infinity = True
         self.setup_working_dir()
         self.copyfiles(skip_opt=True, skip_sky=True)
 
     def setup_working_dir(self):
-        """ Create working directories for caribu."""
+        """Create working directories for caribu."""
         try:
             if self.my_dbg:
                 self.tempdir = Path("./Run-tmp")
@@ -303,16 +331,17 @@ class Caribu(object):
                     self.resdir.mkdir()
         except:
             raise CaribuIOError(
-                ">>> Caribu can't create appropriate directory on your disk : check for read/write permission")
+                ">>> Caribu can't create appropriate directory on your disk : check for read/write permission"
+            )
 
     def copyfiles(self, skip_sky=False, skip_pattern=False, skip_opt=False):
         d = self.tempdir
 
-        if str(self.scene).endswith('.can'):
+        if str(self.scene).endswith(".can"):
             fn = Path(self.scene)
             fn.copy(d / fn.basename())
         else:
-            fn = d / 'cscene.can'
+            fn = d / "cscene.can"
             fn.write_text(self.scene)
         self.scene = Path(fn.basename())
 
@@ -321,7 +350,7 @@ class Caribu(object):
                 fn = Path(self.sky)
                 fn.copy(d / fn.basename())
             else:
-                fn = d / 'sky.light'
+                fn = d / "sky.light"
                 fn.write_text(self.sky)
             self.sky = Path(fn.basename())
 
@@ -331,7 +360,7 @@ class Caribu(object):
                     fn = Path(self.pattern)
                     fn.copy(d / fn.basename())
                 else:
-                    fn = d / 'pattern.8'
+                    fn = d / "pattern.8"
                     fn.write_text(self.pattern)
                 self.pattern = Path(fn.basename())
 
@@ -340,12 +369,12 @@ class Caribu(object):
                 fn = Path(self.sensor)
                 fn.copy(d / fn.basename())
             else:
-                fn = d / 'sensor.can'
+                fn = d / "sensor.can"
                 fn.write_text(self.sensor)
             self.sensor = Path(fn.basename())
 
         if not skip_opt:
-            optn = [x + '.opt' for x in _safe_iter(self.optnames)]
+            optn = [x + ".opt" for x in _safe_iter(self.optnames)]
             try:
                 for i, opt in enumerate(_safe_iter(self.opticals)):
                     # safe_iter allows not to iterate along character composing the optfile name when only one optfile is given
@@ -358,7 +387,9 @@ class Caribu(object):
                         fn.write_text(opt)
                 self.opticals = list(map(Path, _safe_iter(optn)))
             except IndexError:
-                raise CaribuOptionError("Optnames list must be None or as long as optfiles list")
+                raise CaribuOptionError(
+                    "Optnames list must be None or as long as optfiles list"
+                )
 
     def store_result(self, filename, band_name):
         """
@@ -384,12 +415,13 @@ class Caribu(object):
         Ei_inf = []
         for line in f:
             elements = line.split()  # tu split ta chaine en fonction d'une string de separation: par defaut c'est ' ', '\t', mais tu peux faire split(','), ...
-            floats = [float(el) for el in
-                      elements]  # tu convertis toutes les strings du tableau elements en float. floats est un tableau
+            floats = [
+                float(el) for el in elements
+            ]  # tu convertis toutes les strings du tableau elements en float. floats est un tableau
             idx.append(floats[0])
             lab = elements[1]
             if len(lab) < 11:
-                lab = (12 - len(lab)) * '0' + lab
+                lab = (12 - len(lab)) * "0" + lab
             label.append(lab)
             area.append(floats[2])
             Eabs.append(floats[3])
@@ -397,12 +429,19 @@ class Caribu(object):
             Ei_inf.append(floats[5])
 
         f.close()
-        data = {'index': idx, 'label': label, 'area': area, 'Eabs': Eabs, 'Ei_sup': Ei_sup, 'Ei_inf': Ei_inf}
-        self.nrj[band_name] = {'doc': doc, 'data': data}
+        data = {
+            "index": idx,
+            "label": label,
+            "area": area,
+            "Eabs": Eabs,
+            "Ei_sup": Ei_sup,
+            "Ei_inf": Ei_inf,
+        }
+        self.nrj[band_name] = {"doc": doc, "data": data}
 
     def store_sensor(self, filename, band_name):
         id, eio, ei, area = [], [], [], []
-        with open(filename, 'r') as handle:
+        with open(filename, "r") as handle:
             for line in handle:
                 elements = line.split()
                 floats = [float(el) for el in elements]
@@ -410,7 +449,7 @@ class Caribu(object):
                 eio.append(floats[1])
                 ei.append(floats[2])
                 area.append(floats[3])
-        self.measures[band_name] = {'sensor_id': id, 'Ei0': eio, 'Ei': ei, 'area': area}
+        self.measures[band_name] = {"sensor_id": id, "Ei0": eio, "Ei": ei, "area": area}
 
     def run(self):
         """
@@ -434,7 +473,8 @@ class Caribu(object):
             self.canestra(opt)
         if self.resfile is not None:
             import pickle
-            file = open(self.resfile, 'w')
+
+            file = open(self.resfile, "w")
             pickle.dump(self.nrj, file)
             # To restore the value of the object to memory, load the object from the file.
             # Assuming that pickle has not yet been imported for use, start by importing it:
@@ -448,8 +488,7 @@ class Caribu(object):
             print("\n <<<< Caribu.run() ends...\n")
 
     def run_periodise(self):
-        """ Run Periodise as a standalone program
-        """
+        """Run Periodise as a standalone program"""
         self.init_periodise()
         self.periodise()
         d = self.tempdir
@@ -461,8 +500,13 @@ class Caribu(object):
     def periodise(self):
         d = self.tempdir
         name, ext = self.scene.splitext()
-        outscene = name + '_8' + ext
-        cmd = '%s -m %s -8 %s -o %s ' % (self.periodise_name, self.scene, self.pattern, outscene)
+        outscene = name + "_8" + ext
+        cmd = "%s -m %s -8 %s -o %s " % (
+            self.periodise_name,
+            self.scene,
+            self.pattern,
+            outscene,
+        )
         if self.my_dbg:
             print(">>> periodise() : ", cmd)
         status = _process(cmd, d, d / "periodise.log")
@@ -473,29 +517,32 @@ class Caribu(object):
             msg = f.readlines()
             f.close()
             print(">>>  periodise has not finished properly => STOP")
-            raise CaribuRunError(''.join(msg))
+            raise CaribuRunError("".join(msg))
 
     def s2v(self):
         d = self.tempdir
-        wavelength = ' '.join([fn.stripext() for fn in self.opticals])
-        cmd = "%s %s %d %f %s " % (
-            self.s2v_name, self.scene, self.nb_layers, self.can_height, self.pattern) + wavelength
+        wavelength = " ".join([fn.stripext() for fn in self.opticals])
+        cmd = (
+            "%s %s %d %f %s "
+            % (self.s2v_name, self.scene, self.nb_layers, self.can_height, self.pattern)
+            + wavelength
+        )
         if self.my_dbg:
             print(">>> s2v() : ", cmd)
         status = _process(cmd, d, d / "s2v.log")
         # Raise an exception if s2v crashed...
-        leafarea = d / 'leafarea'
+        leafarea = d / "leafarea"
         if not leafarea.exists():
             f = open(d / "s2v.log")
             msg = f.readlines()
             f.close()
             print(">>>  s2v has not finished properly => STOP")
-            raise CaribuRunError(''.join(msg))
+            raise CaribuRunError("".join(msg))
 
     def mcsail(self, opt):
         d = self.tempdir
         optname, ext = Path(opt.basename()).splitext()
-        (d / optname + '.spec').copy(d / 'spectral')
+        (d / optname + ".spec").copy(d / "spectral")
 
         cmd = "%s %s " % (self.sail_name, self.sky)
 
@@ -505,15 +552,15 @@ class Caribu(object):
         logfile = d / logfile
         status = _process(cmd, d, logfile)
 
-        mcsailenv = d / 'mlsail.env'
+        mcsailenv = d / "mlsail.env"
         if mcsailenv.exists():
-            mcsailenv.move(d / optname + '.env')
+            mcsailenv.move(d / optname + ".env")
         else:
             f = open(logfile)
             msg = f.readlines()
             f.close()
             print(">>>  mcsail has not finished properly => STOP")
-            raise CaribuRunError(''.join(msg))
+            raise CaribuRunError("".join(msg))
 
     def canestra(self, opt):
         """Fonction d'appel de l'executable canestrad, code C++ compilee de la radiosite mixte  - MC09"""
@@ -548,13 +595,24 @@ class Caribu(object):
         str_img = "-L %d" % (self.img_size)
 
         cmd = "%s -M %s -l %s -p %s -A %s %s %s %s %s %s %s " % (
-            self.canestra_name, self.scene, self.sky, opt, str_pattern, str_direct, str_diam, str_FF, str_env, str_img, str_sensor)
+            self.canestra_name,
+            self.scene,
+            self.sky,
+            opt,
+            str_pattern,
+            str_direct,
+            str_diam,
+            str_FF,
+            str_env,
+            str_img,
+            str_sensor,
+        )
         if self.my_dbg:
             print((">>> Canestrad(): %s" % (cmd)))
         status = _process(cmd, self.tempdir, d / "nr.log")
 
-        ficres = d / 'Etri.vec0'
-        ficsens = d / 'solem.dat'
+        ficres = d / "Etri.vec0"
+        ficsens = d / "solem.dat"
         if ficres.exists():
             self.store_result(ficres, str(optname))
 
@@ -579,7 +637,7 @@ class Caribu(object):
             msg = f.readlines()
             f.close()
             print(">>>  canestra has not finished properly => STOP")
-            raise CaribuRunError(''.join(msg))
+            raise CaribuRunError("".join(msg))
 
         if (d / Path("nr.log")).exists():
             # copy log files
@@ -621,29 +679,29 @@ def vcaribu(canopy, lightsource, optics, pattern, options):
     # --options (if different from caribu defaults)
     if options is not None:
         # --scatter
-        if '1st' in list(options.keys()):
-            sim.direct = options['1st']
+        if "1st" in list(options.keys()):
+            sim.direct = options["1st"]
         # --infinity
-        if 'infinity' in list(options.keys()):
-            sim.infinity = options['infinity']
+        if "infinity" in list(options.keys()):
+            sim.infinity = options["infinity"]
         # --nb_layers
-        if 'Nz' in list(options.keys()):
-            sim.nb_layers = options['Nz']
+        if "Nz" in list(options.keys()):
+            sim.nb_layers = options["Nz"]
             # --can_height
-        if 'Hc' in list(options.keys()):
-            sim.can_height = options['Hc']
+        if "Hc" in list(options.keys()):
+            sim.can_height = options["Hc"]
             # --sphere_diameter
-        if 'Ds' in list(options.keys()):
-            sim.sphere_diameter = options['Ds']
+        if "Ds" in list(options.keys()):
+            sim.sphere_diameter = options["Ds"]
         # --debug mode (if True, prevent removal of tempdir)
-        if 'debug' in list(options.keys()):
-            sim.my_dbg = options['debug']
+        if "debug" in list(options.keys()):
+            sim.my_dbg = options["debug"]
         # --names of optical properties (usefull if opticals are given as strings
-        if 'wavelength' in list(options.keys()):
-            sim.optnames = options['wavelength']
+        if "wavelength" in list(options.keys()):
+            sim.optnames = options["wavelength"]
         # size of the projection image for first order
-        if 'projection_image_size' in list(options.keys()):
-            sim.img_size = options['projection_image_size']
+        if "projection_image_size" in list(options.keys()):
+            sim.img_size = options["projection_image_size"]
     status = str(sim)
     sim.run()
     irradiances = sim.nrj
@@ -653,7 +711,7 @@ def vcaribu(canopy, lightsource, optics, pattern, options):
 
 
 def vperiodise(canopy, pattern):
-    """ low level interface to periodise. return modified canopy in can format """
+    """low level interface to periodise. return modified canopy in can format"""
     sim = Caribu(resdir=None, resfile=None)  # no output on disk
     # --canfile
     sim.scene = canopy
@@ -662,7 +720,6 @@ def vperiodise(canopy, pattern):
     periodic_scene = sim.run_periodise()
 
     return periodic_scene
-
 
 
 def main(my_arg):
@@ -676,10 +733,23 @@ def main(my_arg):
     print(">>> caribu.py :main(): options analysis")
     # parse command line options
     import getopt
+
     try:
-        opts, args = getopt.getopt(my_arg, "hc:s:o:p:XN:Z:D:",
-                                   ["help", "canfile=", "skyfile=", "optfiles=", "pattern=", "scatter", "nb_layers=",
-                                    "can_height=", "sphere_diameter="])
+        opts, args = getopt.getopt(
+            my_arg,
+            "hc:s:o:p:XN:Z:D:",
+            [
+                "help",
+                "canfile=",
+                "skyfile=",
+                "optfiles=",
+                "pattern=",
+                "scatter",
+                "nb_layers=",
+                "can_height=",
+                "sphere_diameter=",
+            ],
+        )
     except getopt.GetoptError as msg:
         print(msg)
         print("for help use --help")
@@ -691,7 +761,9 @@ def main(my_arg):
     for opt, arg in opts:
         print("opt=%s, arg=%s" % (opt, arg))
         if opt in ("-h", "--help"):
-            print("caribu.py use...\n 'hc:s:p:1N:Z:D:', ['help','canfile=','skyfile=','pattern=','direct','nb_layers=','can_height=','sphere_diameter=' + optfiles (last args)")
+            print(
+                "caribu.py use...\n 'hc:s:p:1N:Z:D:', ['help','canfile=','skyfile=','pattern=','direct','nb_layers=','can_height=','sphere_diameter=' + optfiles (last args)"
+            )
             sys.exit(0)
         elif opt in ("-c", "--canfile"):
             sim.scene = arg
@@ -730,7 +802,7 @@ if __name__ == "__main__":
     # %run caribu.py  --canfile='data/filterT.can' --skyfile='data/zenith.light'  --pattern='data/filter.8'  'data/par.opt' 'data/nir.opt'
     # %run caribu.py  --canfile='data/filterT.can' --skyfile='data/zenith.light'  --pattern='data/filter.8' -X -Z 21 -N 6 -D 10 'data/par.opt' 'data/nir.opt'
 
-'''
+"""
 # Original caribu.csh in C-shell....
 # MC00
 
@@ -804,4 +876,4 @@ endif
 #setenv c `cat $1|wc -w`
 #@ c = $c  / $r
 
-'''
+"""

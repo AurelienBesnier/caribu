@@ -9,8 +9,8 @@
 #       WebSite : https://github.com/openalea-incubator/caribu
 #
 # ==============================================================================
-""" paths to module data file
-"""
+"""paths to module data file"""
+
 try:
     from path import Path
 except ImportError:
@@ -25,5 +25,5 @@ except ImportError:
 
 def data_path(filename):
     d = Path(__file__).dirname()
-    fn = 'data/' + filename
+    fn = "data/" + filename
     return d / fn

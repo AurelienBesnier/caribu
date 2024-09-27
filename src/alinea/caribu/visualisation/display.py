@@ -1,7 +1,4 @@
 import openalea.plantgl.all as pgl
-import random
-import types
-
 
 # TODO: store data (optics and transparencies in the scene
 # Methods to color the scene, and the vertices.
@@ -9,17 +6,15 @@ import types
 # test it with randomized values and color map
 # Implement discrete color map (lut?)
 
-class CanestraScene(object):
+
+class CanestraScene:
     def __init__(self, plants, soil, indexes):
         self.plants = plants
         self.soil = soil
         self.indexes = indexes
         self.scene = None
 
-    def build_scene(self,
-                    leaf_material=None,
-                    stem_material=None,
-                    soil_material=None):
+    def build_scene(self, leaf_material=None, stem_material=None, soil_material=None):
         if not leaf_material:
             leaf_material = pgl.Material(pgl.Color3(0, 180, 0))
 
@@ -64,7 +59,7 @@ class CanestraScene(object):
                 geom.colorPerVertex = False
 
             assert 3 * len(geom.colorList) == count
-            if i >= n or type(colors[i]) == float:
+            if i >= n or type(colors[i]) is float:
                 geom.colorList.append(pgl.Color4(10, 10, 10, 0))
             else:
                 r, g, b = colors[i]
@@ -95,7 +90,7 @@ def process_line(line):
     line = line.strip()
     if not line:
         return
-    if line[0] == '#':
+    if line[0] == "#":
         return
 
     l = line.split()
@@ -104,11 +99,13 @@ def process_line(line):
     coords = list(map(float, l[-9:]))
     label = l[2]
     if len(label) < 11:
-        label = (12 - len(label)) * '0' + label
+        label = (12 - len(label)) * "0" + label
 
-    triangle = (pgl.Vector3(*coords[:3]),
-                pgl.Vector3(*coords[3:6]),
-                pgl.Vector3(*coords[6:]))
+    triangle = (
+        pgl.Vector3(*coords[:3]),
+        pgl.Vector3(*coords[3:6]),
+        pgl.Vector3(*coords[6:]),
+    )
     return label, triangle
 
 
@@ -127,7 +124,7 @@ def build_geometry(elements):
     plants = {}
     soil = {}
     indexes = []
-    print('number of elements', len(elements))
+    print("number of elements", len(elements))
     for i, (label, triangle) in enumerate(elements):
         pid = plant_id(label)
         if pid not in plants:
@@ -137,12 +134,12 @@ def build_geometry(elements):
 
         if is_leaf(label):
             lid = leaf_id(label)
-            leaves = plant['leaves']
+            leaves = plant["leaves"]
             if lid not in leaves:
                 leaves[lid] = pgl.TriangleSet([], [])
             shape = leaves[lid]
         elif is_stem(label):
-            shape = plant['stems']
+            shape = plant["stems"]
         else:
             assert is_soil(label)
             if "soil" not in soil:
@@ -193,6 +190,7 @@ def transparencies(indexes):
 
 def optics(indexes):
     return [optical_species(t[0]) for t in indexes]
+
 
 # def test(fn):
 #     elements = read(fn)
