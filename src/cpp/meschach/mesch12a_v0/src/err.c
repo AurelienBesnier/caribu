@@ -280,7 +280,7 @@ extern  int	ev_err(char *file, int err_num, int line_num, const char *fn_name, i
 	       fprintf(stdout,"\n\"%s\", line %d: %s in function %s()\n",
 		       file,line_num,err_list[list_num].listp[num],
 		       isascii(*fn_name) ? fn_name : "???");
-	   exit();
+	   exit(1);
 	   break;
 	   case EF_JUMP:
 	   fprintf(stderr,"\n\"%s\", line %d: %s in function %s()\n",
