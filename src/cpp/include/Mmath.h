@@ -15,7 +15,7 @@ Macos(double x)
         if (fabs(x) > 1.) {
                 if ((fabs(x) - 1e-5) > 1.) {
                         Ferr << "\n ** Error: Macos(x) with 1<x=" << x << "\n";
-                        abort();
+                        exit();
                 } else {
                         if (x > 0)
                                 return 0;
@@ -32,7 +32,7 @@ Masin(double x)
         if (fabs(x) > 1.) {
                 if ((fabs(x) - 1e-5) > 1.) {
                         Ferr << "\n ** Error: Msin(x) with 1<|x|=" << x << "\n";
-                        abort();
+                        exit();
                 } else {
                         if (x > 0)
                                 return M_PI / 2.;
@@ -50,7 +50,7 @@ Msqrt(double x)
         if (x < 0) {
                 if (x < -1e-5) {
                         Ferr << "\n ** Error: Msqrt(x) with 0>x=" << x << "\n";
-                        abort();
+                        exit();
                 } else {
                         return 0.;
                 }

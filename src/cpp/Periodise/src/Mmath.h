@@ -14,7 +14,7 @@ Macos(double x)
                 if ((fabs(x) - 1e-5) > 1.) {
                         fprintf(
                           stderr, "\n ** Error: Macos(x) with 1<x=%.15f\n", x);
-                        abort();
+                        exit();
                 } else {
                         if (x > 0)
                                 return 0;
@@ -32,7 +32,7 @@ Masin(double x)
                 if ((fabs(x) - 1e-5) > 1.) {
                         fprintf(
                           stderr, "\n ** Error: Msin(x) with 1<|x|=%.15f\n", x);
-                        abort();
+                        exit();
                 } else {
                         if (x > 0)
                                 return M_PI / 2.;

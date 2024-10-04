@@ -291,7 +291,7 @@ int	err_num, line_num,list_num;
 	       fprintf(stdout,"\n\"%s\", line %d: %s in function %s()\n",
 		       file,line_num,err_list[list_num].listp[num],
 		       isascii(*fn_name) ? fn_name : "???");
-	   abort();
+	   exit();
 	   break;
 	   case EF_JUMP:
 	   fprintf(stderr,"\n\"%s\", line %d: %s in function %s()\n",
