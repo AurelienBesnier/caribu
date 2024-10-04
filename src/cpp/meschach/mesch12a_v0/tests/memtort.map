@@ -11,7 +11,7 @@
  0002:00005F10      _CLOCALE
  0002:00005E00      _CMonetary
  0002:00005E34      _CNumeric
- 0002:00005E4C      _CTimeDate
+ 0002:00005E4C      _time.hDate
  0001:00021000      _CatchCleanup()
  0001:00017DB0      _InitTermAndUnexPtrs()
  0001:00020E59      _ReThrowException(unsigned int, unsigned char *)
@@ -2131,7 +2131,7 @@
  0002:00005E00      d1146_0
  0002:00005E00      _CMonetary
  0002:00005E34      _CNumeric
- 0002:00005E4C      _CTimeDate
+ 0002:00005E4C      _time.hDate
  0002:00005F10      _CLOCALE
  0002:00005F3C      ___locale
  0002:00006060      d1148_1

@@ -2,9 +2,9 @@
 #include <iostream>
 using namespace std;
 #include "diffuseur.h"
-#include <cstdio>
 #include <stdlib.h>
-#include <cstring>
+#include <stdlib.h>
+#include <string.h>
 #include <ferrlog.h>
 extern "C"
 {

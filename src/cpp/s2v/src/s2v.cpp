@@ -122,12 +122,12 @@
 #include <iostream> //.h>
 using namespace std;
 
-#include <cstdio>
+#include <stdlib.h>
 #include <stdlib.h>
 
-#include <cctype>
+#include <ctype.h>
 
-#include <cmath>
+#include <math.h>
 
 #include <T_utilitaires.h>
 #include <system.h>

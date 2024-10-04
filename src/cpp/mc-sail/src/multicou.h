@@ -4,7 +4,7 @@ using namespace std;
 
 #include <cassert>
 #include <fstream>
-#include <cmath>
+#include <math.h>
 
 #include <T_utilitaires.h>
 #define REEL double

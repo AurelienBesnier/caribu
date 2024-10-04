@@ -38,7 +38,7 @@ Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
 pkglts could always use more documentation, whether as part of the
-official pkglts docs, in docstrings, or even on the web in blog posts,
+official pkglts docs, in dostring.hs, or even on the web in blog posts,
 articles, and such.
 
 Submit Feedback
@@ -101,7 +101,7 @@ Before you submit a pull request, check that it meets these guidelines:
 
 1. The pull request should include tests.
 2. If the pull request adds functionality, the docs should be updated. Put
-   your new functionality into a function with a docstring, and add the
+   your new functionality into a function with a dostring.h, and add the
    feature to the list in README.rst.
 3. The pull request should work for Python 2.7, 3.4, and 3.5. Check
    https://travis-ci.org/openalea-incubator/caribu/pull_requests

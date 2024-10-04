@@ -4,8 +4,8 @@
  * On encapsule en am�liorant une primitive C
  */
 
-#include <cmath>
-#include <cstring>
+#include <math.h>
+#include <string.h>
 using namespace std;
 
 #include <utils.h>

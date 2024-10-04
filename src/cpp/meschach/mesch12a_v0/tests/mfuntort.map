@@ -11,7 +11,7 @@
  0002:00004B84      _CLOCALE
  0002:00004A74      _CMonetary
  0002:00004AA8      _CNumeric
- 0002:00004AC0      _CTimeDate
+ 0002:00004AC0      _time.hDate
  0001:0001AE84      _CatchCleanup()
  0001:00008774      _Dsolve
  0001:0000960C      _Hfactor
@@ -1960,7 +1960,7 @@
  0002:00004A74      d1146_0
  0002:00004A74      _CMonetary
  0002:00004AA8      _CNumeric
- 0002:00004AC0      _CTimeDate
+ 0002:00004AC0      _time.hDate
  0002:00004B84      _CLOCALE
  0002:00004BB0      ___locale
  0002:00004CD4      d1148_1

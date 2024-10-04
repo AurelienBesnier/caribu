@@ -2,7 +2,7 @@
 using namespace std;
 #include <boost/python.hpp>
 using namespace boost::python;
-#include <cstring>
+#include <string.h>
 
 int
 periodise(int argc, char** argv);

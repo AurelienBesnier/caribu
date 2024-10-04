@@ -38,7 +38,7 @@ using namespace std;
 #endif
 
 #include <iostream>
-#include <cmath>
+#include <math.h>
 #include <stdlib.h>
 
 #include <exception>

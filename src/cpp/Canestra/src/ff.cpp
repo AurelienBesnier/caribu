@@ -3,9 +3,9 @@
 #include <iostream>
 using namespace std;
 
-#include <cmath>
-#include <cstdio>
-#include <ctime>
+#include <math.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "Mmath.h"
 #include "canopy.h"

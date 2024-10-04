@@ -17,7 +17,7 @@ using namespace std;
 #endif
 #include <sstream>
 
-#include <cmath>
+#include <math.h>
 
 #include "canopy.h"
 #include "outils.h"

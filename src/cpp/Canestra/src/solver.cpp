@@ -12,8 +12,8 @@
 #include <iostream> //.h>
 using namespace std;
 
-#include <cmath>
-#include <cstdio>
+#include <math.h>
+#include <stdlib.h>
 
 #include "canopy.h"
 #include "outils.h"

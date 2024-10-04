@@ -23,7 +23,7 @@ le fichier de proprietes optiques
 #######################################
 /*/
 
-#include <cstdio>
+#include <stdlib.h>
 using namespace std;
 
 #include "GetOpt.h"

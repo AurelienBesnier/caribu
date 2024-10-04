@@ -3,8 +3,8 @@
 
 #ifndef _Mmath
 #define _Mmath
-#include <cmath>
-#include <cstdio>
+#include <math.h>
+#include <stdlib.h>
 
 // acos
 inline double

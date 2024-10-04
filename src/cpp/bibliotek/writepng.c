@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <cstring>
+#include <string.h>
 #include <math>
 
 #ifdef WIN32

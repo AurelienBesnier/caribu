@@ -3,7 +3,7 @@
 #ifndef _Capteur
 #define _Capteur
 
-#include <cmath>
+#include <math.h>
 
 #include "T_utilitaires.h"
 #include "image.h"

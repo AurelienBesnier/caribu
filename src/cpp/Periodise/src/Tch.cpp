@@ -1,6 +1,6 @@
 // g++ -g -W -Wall -o Tch{,.C} ; Tch
 
-#include <cstdio>
+#include <stdlib.h>
 using namespace std;
 
 #include <ctype.h>

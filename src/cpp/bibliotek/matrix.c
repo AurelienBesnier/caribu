@@ -1,7 +1,7 @@
 /* sorry for the lack of comments */
 
-#include <cmath>
-#include <cstdio>
+#include <math.h>
+#include <stdlib.h>
 #include <stdlib.h>
 
 #include "matrix.h"

@@ -23,9 +23,9 @@
 #define GetOpt_h 1
 
 //#include <std.h>
-#include <cstdio>
 #include <stdlib.h>
-#include <cstring>
+#include <stdlib.h>
+#include <string.h>
 
 class GetOpt
 {

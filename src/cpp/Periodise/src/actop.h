@@ -7,7 +7,7 @@ extern "C"
 #ifndef _ACTOP
 #define _ACTOP
 
-#include <cmath>
+#include <math.h>
 
 #include "Mmath.h"
 #include "outils.h"

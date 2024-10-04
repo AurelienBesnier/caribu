@@ -1,5 +1,5 @@
 #include <cantools.h>
-#include <math>
+#include <math.h>
 
 #define RANG_E 1E11
 #define RANG_P 1E6

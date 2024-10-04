@@ -14,7 +14,7 @@ using namespace std;
 
 #include "canopyL.h"
 #include "outils.h"
-#include <cmath>
+#include <math.h>
 #include <unistd.h>
 // CANOPY
 

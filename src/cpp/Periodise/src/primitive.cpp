@@ -1,7 +1,7 @@
 #include "primitive.h"
 #include "Mmath.h"
 
-#include <cctype>
+#include <ctype.h>
 
 // PRIMITIVE
 

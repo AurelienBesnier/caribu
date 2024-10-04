@@ -3,8 +3,8 @@
 #ifndef _ACTOP
 #define _ACTOP
 
-#include <cmath>
-#include <cstdio>
+#include <math.h>
+#include <stdlib.h>
 
 //#include "outils.h"
 

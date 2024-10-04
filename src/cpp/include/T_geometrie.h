@@ -22,7 +22,7 @@ extern "C"
 #include <cassert>
 #include <stdlib.h>
 }
-#include <cmath>
+#include <math.h>
 
 // MC98 typedef double reel;
 #ifdef _SGI

@@ -6,8 +6,8 @@
 #include <iostream> // pour utiliser namespace (compile mieux)
 using namespace std;
 
-#include <cmath>
-#include <cstdio>
+#include <math.h>
+#include <stdlib.h>
 
 #include "chrono.h"
 #include "outils.h"

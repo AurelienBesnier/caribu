@@ -6,7 +6,7 @@
 #include <fstream>  //
 #include <iomanip>  //
 #include <iostream> //
-#include <cmath>
+#include <math.h>
 #include <stdlib.h> // pour exit
 
 #include "T_utilitaires.h"

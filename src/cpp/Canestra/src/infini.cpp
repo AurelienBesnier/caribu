@@ -8,7 +8,7 @@
 #include <iostream> //
 using namespace std;
 
-#include <cmath>
+#include <math.h>
 
 #define _INFINI
 #include "chrono.h"

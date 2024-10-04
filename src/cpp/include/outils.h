@@ -13,8 +13,8 @@ using namespace std;
 #endif
 
 //#include "matlib.h"
-#include <cstdio>
-#include <ctime>
+#include <stdlib.h>
+#include <time.h>
 #ifndef _OSF_SOURCE
 /*
  *      Useful mathmatical constants:

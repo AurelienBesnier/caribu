@@ -11,7 +11,7 @@
  0002:00005BBC      _CLOCALE
  0002:00005AAC      _CMonetary
  0002:00005AE0      _CNumeric
- 0002:00005AF8      _CTimeDate
+ 0002:00005AF8      _time.hDate
  0001:0001FB08      _CatchCleanup()
  0001:00008F90      _Dsolve
  0001:0000036C      _Dv_mlt
@@ -2001,7 +2001,7 @@
  0002:00005AAC      d1146_0
  0002:00005AAC      _CMonetary
  0002:00005AE0      _CNumeric
- 0002:00005AF8      _CTimeDate
+ 0002:00005AF8      _time.hDate
  0002:00005BBC      _CLOCALE
  0002:00005BE8      ___locale
  0002:00005D0C      d1148_1

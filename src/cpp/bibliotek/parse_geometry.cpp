@@ -11,10 +11,10 @@
 using namespace std;
 #include <ferrlog.h>
 
-#include <cmath>
-#include <cstdio>
+#include <math.h>
 #include <stdlib.h>
-#include <cstring>
+#include <stdlib.h>
+#include <string.h>
 #ifndef WIN32
 #include <unistd.h>
 #endif

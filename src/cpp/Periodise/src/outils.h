@@ -1,9 +1,9 @@
 #ifndef OUTILS
 #define OUTILS
 //#include "matlib.h"
-#include <cstdio>
 #include <stdlib.h>
-#include <ctime>
+#include <stdlib.h>
+#include <time.h>
 using namespace std;
 #ifndef _OSF_SOURCE
 /*

@@ -5,7 +5,7 @@
 using namespace std;
 
 #include "multicou.h"
-#include <cmath>
+#include <math.h>
 /*class Mlayin{// a allouer pour n couches
 public:
   REEL att, sig, ks, sb, sf, ko, uf, ub, w;

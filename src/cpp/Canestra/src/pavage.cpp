@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-#include <cmath>
+#include <math.h>
 
 #include "image.h"
 void

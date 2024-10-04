@@ -1,9 +1,9 @@
 
-#include <cstdio>
+#include <stdlib.h>
 using namespace std;
 
 #include <cstdarg>
-#include <cstring>
+#include <string.h>
 
 int
 f(int first, int second, int third, ...)

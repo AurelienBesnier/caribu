@@ -6,7 +6,7 @@ extern "C"
 #include <cassert>
 #include <stdlib.h>
 }
-#include <cmath>
+#include <math.h>
 #include <iostream>
 using namespace std;
 typedef float reel;

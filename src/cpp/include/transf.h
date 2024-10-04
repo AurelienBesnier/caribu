@@ -2,12 +2,12 @@
 #ifndef __TRANSF_H__
 #define __TRANSF_H__
 
-#include <cmath>
-#include <cstdio>
+#include <math.h>
 #include <stdlib.h>
-#include <ctime>
+#include <stdlib.h>
+#include <time.h>
 
-#include <cctype>
+#include <ctype.h>
 #ifndef WIN32
 #include <sys/ipc.h>
 #include <sys/shm.h>

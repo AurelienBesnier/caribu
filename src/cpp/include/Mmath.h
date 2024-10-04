@@ -4,8 +4,8 @@
 #ifndef _Mmath
 #define _Mmath
 #include "ferrlog.h"
-#include <cmath>
-#include <cstdio>
+#include <math.h>
+#include <stdlib.h>
 #include <stdlib.h>
 
 // acos

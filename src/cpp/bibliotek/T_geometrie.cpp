@@ -1,7 +1,7 @@
 // OC 14 4 98 constification generalise du module, cf le .H
 // OC 29 4 98 mise en comm de copycons et op= superflus
 
-#include <cstdio>
+#include <stdlib.h>
 using namespace std;
 
 #include <T_geometrie.h>
