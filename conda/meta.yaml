@@ -4,9 +4,6 @@ package:
 
 source:
   path: ..
-  patches:
-   # List any patch files here
-   - setup.py.patch #[unix]
 
 build:
   preserve_egg_dir: True
@@ -20,7 +17,7 @@ requirements:
     - setuptools
     - openalea.deploy
   build:
-    - python {{PY_VER}}
+    - python x.x
     - {{ compiler('c') }}   
     - {{ compiler('cxx') }} 
     - m2w64-toolchain   # [win]
