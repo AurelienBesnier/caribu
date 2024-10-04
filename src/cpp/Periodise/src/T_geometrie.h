@@ -4,7 +4,7 @@
 extern "C"
 {
 #include <cassert>
-#include <cstdlib>
+#include <stdlib.h>
 }
 #include <cmath>
 #include <iostream>

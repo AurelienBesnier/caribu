@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <cstdio>
-#include <cstdlib>
+#include <stdlib.h>
 
 #include "matrix.h"
 

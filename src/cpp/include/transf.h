@@ -4,7 +4,7 @@
 
 #include <cmath>
 #include <cstdio>
-#include <cstdlib>
+#include <stdlib.h>
 #include <ctime>
 
 #include <cctype>

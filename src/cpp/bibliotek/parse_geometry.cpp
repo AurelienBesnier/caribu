@@ -13,7 +13,7 @@ using namespace std;
 
 #include <cmath>
 #include <cstdio>
-#include <cstdlib>
+#include <stdlib.h>
 #include <cstring>
 #ifndef WIN32
 #include <unistd.h>

@@ -10,7 +10,7 @@
 #include <iostream>
 using namespace std;
 
-#include <cstdlib> // pour exit
+#include <stdlib.h> // pour exit
 
 #include <fstream>
 #include <iomanip>

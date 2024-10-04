@@ -1,5 +1,5 @@
 #include "ferrlog.h"
-#include <cstdlib>
+#include <stdlib.h>
 #include <iostream>
 
 using namespace std;

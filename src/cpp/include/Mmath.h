@@ -6,7 +6,7 @@
 #include "ferrlog.h"
 #include <cmath>
 #include <cstdio>
-#include <cstdlib>
+#include <stdlib.h>
 
 // acos
 inline double

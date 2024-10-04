@@ -3,7 +3,7 @@
 using namespace std;
 #include "diffuseur.h"
 #include <cstdio>
-#include <cstdlib>
+#include <stdlib.h>
 #include <cstring>
 #include <ferrlog.h>
 extern "C"

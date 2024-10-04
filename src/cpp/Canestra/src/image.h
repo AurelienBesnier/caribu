@@ -7,7 +7,7 @@
 #include <iomanip>  //
 #include <iostream> //
 #include <cmath>
-#include <cstdlib> // pour exit
+#include <stdlib.h> // pour exit
 
 #include "T_utilitaires.h"
 #include "outils.h"

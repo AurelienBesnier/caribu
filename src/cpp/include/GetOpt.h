@@ -24,7 +24,7 @@
 
 //#include <std.h>
 #include <cstdio>
-#include <cstdlib>
+#include <stdlib.h>
 #include <cstring>
 
 class GetOpt

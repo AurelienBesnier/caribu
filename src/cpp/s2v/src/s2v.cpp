@@ -123,7 +123,7 @@
 using namespace std;
 
 #include <cstdio>
-#include <cstdlib>
+#include <stdlib.h>
 
 #include <cctype>
 

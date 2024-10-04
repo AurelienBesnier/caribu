@@ -2,7 +2,7 @@
 #define OUTILS
 //#include "matlib.h"
 #include <cstdio>
-#include <cstdlib>
+#include <stdlib.h>
 #include <ctime>
 using namespace std;
 #ifndef _OSF_SOURCE
