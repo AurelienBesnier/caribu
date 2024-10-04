@@ -1,6 +1,6 @@
 package:
   name: alinea.caribu
-  version: {{ data.get('version') }}
+  version: "8.1.5"
 
 source:
   path: ..
@@ -12,7 +12,7 @@ build:
   preserve_egg_dir: True
   number: 0
   script: 
-    - {{PYTHON}} setup.py install #[win]
+    - {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
@@ -43,6 +43,6 @@ test:
    - pytest -v
 
 about:
-  home: {{ data.get('url') }}
+  home: https://github.com/openalea-incubator/caribu
   summary: Eco-physiological model of light interception by plants.
 
