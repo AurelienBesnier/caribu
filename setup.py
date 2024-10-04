@@ -4,8 +4,6 @@
 # {# pkglts, pysetup.kwds
 # format setup arguments
 
-import os
-from os import walk
 from os.path import abspath, normpath, dirname
 from os.path import join as pj
 

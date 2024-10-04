@@ -4,9 +4,9 @@
 #ifndef _ARBO
 #define _ARBO
 #define DQ(A) #A
-#define WEG(A,B) DQ(A/B)
+#define WEG(A, B) DQ(A / B)
 
-/* utilisation dans le code eg 
+/* utilisation dans le code eg
    fopen(chemin(ROOT,fic.m),"r");
    */
 #endif

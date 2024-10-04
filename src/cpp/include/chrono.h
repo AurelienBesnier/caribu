@@ -2,7 +2,7 @@
     Chrono.H	simple Chrono class (derived from Rudi's Chrono class)
 
     by Andreas Hohmann, ZIB, Hohmann@sc.ZIB-Berlin.DE
-    
+
     last change:	Sep 10, 1994
     Compiler: 		CC/g++
 -----------------------------------------------------------------------------*/
@@ -16,25 +16,29 @@ using namespace std;
 
 class ChronoData;
 
-class Chrono  {
-public:
-  Chrono();
-  ~Chrono();
-  
-  void Start();
-  void Stop();
-  double Seconds();
-    
-  ostream& PrintOn(ostream &s) ;
-  ferrlog& PrintOn(ferrlog &s) ;
-  char* Name() const { return (char*)"Chrono"; }
-private:
-  ChronoData *data;
-  friend ostream & operator <<(ostream&,Chrono&); 
-// HA 01 2001
-  friend ferrlog & operator <<(ferrlog&, Chrono& ) ;
+class Chrono
+{
+      public:
+        Chrono();
+        ~Chrono();
+
+        void Start();
+        void Stop();
+        double Seconds();
+
+        ostream& PrintOn(ostream& s);
+        ferrlog& PrintOn(ferrlog& s);
+        char* Name() const { return (char*)"Chrono"; }
+
+      private:
+        ChronoData* data;
+        friend ostream& operator<<(ostream&, Chrono&);
+        // HA 01 2001
+        friend ferrlog& operator<<(ferrlog&, Chrono&);
 };
-ostream & operator <<(ostream& out ,Chrono& uhr);
+ostream&
+operator<<(ostream& out, Chrono& uhr);
 // HA 01 2001
-ferrlog & operator <<(ferrlog&, Chrono& ) ;
+ferrlog&
+operator<<(ferrlog&, Chrono&);
 #endif

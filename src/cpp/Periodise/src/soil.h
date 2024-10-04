@@ -9,13 +9,17 @@
 #endif
 
 /* initialise les parametre du modele d'Hapke */
-EXTR void param_sol(double w_, double h_, double b_, double c_, double bb_, double cc_);
+EXTR void
+param_sol(double w_, double h_, double b_, double c_, double bb_, double cc_);
 
 /* calcule la reflectance bidirectionnelle */
-EXTR double refbd(double ts, double to, double psi);
+EXTR double
+refbd(double ts, double to, double psi);
 
 /* calcule la reflectance directionnelle-hemispherique */
-EXTR double refdh(double ts);
+EXTR double
+refdh(double ts);
 
 /* calcule la reflectance bihemispherique par integration num (Gauss)*/
-EXTR  double refbh();
+EXTR double
+refbh();

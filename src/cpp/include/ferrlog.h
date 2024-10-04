@@ -1,8 +1,8 @@
 /*
- * Flux C++ de logs; les messages g�r�s par ce flux sont recopi�s sur 
+ * Flux C++ de logs; les messages g�r�s par ce flux sont recopi�s sur
  * cerr ET dans le fichier dont le nom est fourni au constructeur
  * de l'objet ferrlog.
- * Bug ? 
+ * Bug ?
  * aucune gestion des acc�s au fichier n'est r�alis�e
  *
  */
@@ -16,33 +16,33 @@ using namespace std;
 
 class ferrlog
 {
- private:
-  ofstream *out ;
- public:
-  ferrlog( char *filename) ;
-  void open(char *filename);
-  ~ferrlog() ;
-  ferrlog &operator << ( char * msg) ;
-  ferrlog &operator << ( const char *msg ) ;
-  ferrlog &operator << ( char msg) ;
-  ferrlog &operator << ( int msg) ;
-  ferrlog &operator << ( long int msg) ;
-  ferrlog &operator << ( unsigned int msg) ;
-  ferrlog &operator << ( float msg) ;
-  ferrlog &operator << ( double msg) ;
-  ferrlog &operator << ( void *msg) ;
-  // ferrlog &operator << ( ostream & other) ;
-  ferrlog &operator << ( string msg) ;
-  ferrlog &flush (void) ;
-  void close(void);
+      private:
+        ofstream* out;
 
-} ;
+      public:
+        ferrlog(char* filename);
+        void open(char* filename);
+        ~ferrlog();
+        ferrlog& operator<<(char* msg);
+        ferrlog& operator<<(const char* msg);
+        ferrlog& operator<<(char msg);
+        ferrlog& operator<<(int msg);
+        ferrlog& operator<<(long int msg);
+        ferrlog& operator<<(unsigned int msg);
+        ferrlog& operator<<(float msg);
+        ferrlog& operator<<(double msg);
+        ferrlog& operator<<(void* msg);
+        // ferrlog &operator << ( ostream & other) ;
+        ferrlog& operator<<(string msg);
+        ferrlog& flush(void);
+        void close(void);
+};
 
 //#define Ferr *ferr
 
-extern ferrlog Ferr ;               //ferrlog.cpp
+extern ferrlog Ferr; // ferrlog.cpp
 
-//void prog_terminate (int code) ;
+// void prog_terminate (int code) ;
 /* assure la destruction du ferrlog avant exit;
  * puis apelle exit(code)
  */

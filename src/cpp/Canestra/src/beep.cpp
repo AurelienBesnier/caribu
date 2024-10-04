@@ -1,7 +1,9 @@
 #include <cstdio>
-using namespace std ;
+using namespace std;
 
-int main(){
-  printf("%c",7);
-  return 0;
+int
+main()
+{
+        printf("%c", 7);
+        return 0;
 }
