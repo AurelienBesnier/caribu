@@ -37,7 +37,7 @@ test:
   source_files:
     - test/*.py
   commands:
-   - pytest -v
+    - pytest -v
 
 about:
   home: https://github.com/openalea-incubator/caribu
