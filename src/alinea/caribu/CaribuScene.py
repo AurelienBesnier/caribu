@@ -117,7 +117,7 @@ def domain_mesh(domain, z=0.0, subdiv=1):
     return [(a, b, c), (b, d, c)]
 
 
-class CaribuScene(object):
+class CaribuScene:
     """A class interface to Caribu algorithms"""
 
     default_material = (0.06, 0.07)
@@ -338,7 +338,7 @@ class CaribuScene(object):
         self.optfile = None
 
     def __del__(self):
-        if os.path.exists(self.tempdir):
+        if self.tempdir is not None and os.path.exists(self.tempdir):
             import shutil
 
             shutil.rmtree(self.tempdir)
@@ -613,7 +613,7 @@ class CaribuScene(object):
                         materials = materials + [(albedo,)] * len(self.soil)
                     self.materialvalues = materials
 
-                    if not self.tempdir is None:
+                    if self.tempdir is not None:
                         self.canfile = os.path.join(self.tempdir, "cscene.can")
                         self.optfile = os.path.join(self.tempdir, "band0.opt")
                         write_scene(

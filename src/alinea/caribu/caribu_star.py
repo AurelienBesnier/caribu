@@ -128,18 +128,18 @@ def rain_and_light_star(
         domain=domain,
     )
 
-    if not "rain_exposed_area" in g.properties():
+    if "rain_exposed_area" not in g.properties():
         g.add_property("rain_exposed_area")
-    if not "rain_star" in g.properties():
+    if "rain_star" not in g.properties():
         g.add_property("rain_star")
-    if not "light_exposed_area" in g.properties():
+    if "light_exposed_area" not in g.properties():
         g.add_property("light_exposed_area")
-    if not "light_star" in g.properties():
+    if "light_star" not in g.properties():
         g.add_property("light_star")
     g.property("rain_exposed_area").update(rain_exposed_area)
-    g.property("light_exposed_area").update(light_exposed_area)
+    #g.property("light_exposed_area").update(light_exposed_area)
     g.property("rain_star").update(rain_star)
-    g.property("light_star").update(light_star)
+    #g.property("light_star").update(light_star)
     return g
 
 

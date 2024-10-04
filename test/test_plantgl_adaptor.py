@@ -27,7 +27,7 @@ if run_test:
         css = list(cs.values())[1]
         assert len(css[0]) == 3
         assert len(css[0][0]) == 3
-        return cs
+        assert cs is not None
 
     def test_mtg():
         g = MTG()
@@ -43,4 +43,4 @@ if run_test:
         assert len(list(cs.values())[0][0]) == 3
         assert len(list(cs.values())[0][0][0]) == 3
 
-        return cs
+        assert cs is not None

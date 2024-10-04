@@ -104,7 +104,7 @@ class CaribuRunError(CaribuError):
     pass
 
 
-class Caribu(object):
+class Caribu:
     def __init__(
         self,
         canfile=None,
@@ -269,7 +269,7 @@ class Caribu(object):
                         "incompatible options for nested radiosity: no infinity &&  sphere_diameter >= 0 "
                     )
 
-        if self.pattern == None and self.infinity:
+        if self.pattern is None and self.infinity:
             raise CaribuOptionError(
                 "pattern not specified => Caribu canot infinitise the scene"
             )
@@ -305,7 +305,7 @@ class Caribu(object):
 
     def init_periodise(self):
         """init caribuscene for a periodise-only run."""
-        if self.scene == None or self.pattern == None:
+        if self.scene is None or self.pattern is None:
             raise CaribuOptionError(
                 "Periodise has not been fully initialized: scene and pattern have to be defined"
             )
@@ -509,7 +509,7 @@ class Caribu(object):
         )
         if self.my_dbg:
             print(">>> periodise() : ", cmd)
-        status = _process(cmd, d, d / "periodise.log")
+        _process(cmd, d, d / "periodise.log")
         if (d / outscene).exists():
             self.scene = outscene
         else:
@@ -529,7 +529,7 @@ class Caribu(object):
         )
         if self.my_dbg:
             print(">>> s2v() : ", cmd)
-        status = _process(cmd, d, d / "s2v.log")
+        _process(cmd, d, d / "s2v.log")
         # Raise an exception if s2v crashed...
         leafarea = d / "leafarea"
         if not leafarea.exists():
@@ -550,7 +550,7 @@ class Caribu(object):
             print(">>> mcsail(): ", cmd)
         logfile = "sail-%s.log" % (optname)
         logfile = d / logfile
-        status = _process(cmd, d, logfile)
+        _process(cmd, d, logfile)
 
         mcsailenv = d / "mlsail.env"
         if mcsailenv.exists():
@@ -609,7 +609,7 @@ class Caribu(object):
         )
         if self.my_dbg:
             print((">>> Canestrad(): %s" % (cmd)))
-        status = _process(cmd, self.tempdir, d / "nr.log")
+        _process(cmd, self.tempdir, d / "nr.log")
 
         ficres = d / "Etri.vec0"
         ficsens = d / "solem.dat"

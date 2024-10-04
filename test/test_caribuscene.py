@@ -40,7 +40,7 @@ if run_test:
         cs = CaribuScene(scene=can)
         assert len(cs.material[cs.default_band]) == len(cs.scene)
 
-        return cs
+        assert cs is not None
 
     def test_instantiation_from_python():
         s = pgl.Scene()
@@ -86,7 +86,7 @@ if run_test:
         assert "par" in cs.material
         assert cs.soil_reflectance == soil_reflectance
 
-        return cs
+        assert cs is not None
 
     def test_bbox():
         s = pgl.Scene()
@@ -252,7 +252,7 @@ if run_test:
         assert len(out[cscene.default_band]["Eabs"]["lower"]) == 2
         assert len(out[cscene.default_band]["Eabs"]["upper"]) == 1
 
-        return out, agg
+        assert out is not None and agg is not None
 
     def test_run_polychrome():
         pts_1 = [(0, 0, 0), (1, 0, 0), (0, 1, 0)]
@@ -300,4 +300,4 @@ if run_test:
         assert len(out["nir"]["Eabs"]) == 2
         assert out["par"]["Eabs"]["upper"][0] != out["nir"]["Eabs"]["upper"][0]
 
-        return out, agg
+        assert out is not None and agg is not None
