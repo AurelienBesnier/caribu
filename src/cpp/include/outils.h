@@ -8,7 +8,6 @@ using namespace std;
 
 #ifndef __GNUG__
 #ifndef WIN32
-#include "bool.h"
 #include "verbose.h"
 #endif
 #endif

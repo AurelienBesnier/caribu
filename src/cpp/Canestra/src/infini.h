@@ -1,7 +1,3 @@
-#ifndef __GNUG__
-#include "bool.h"
-#endif
-
 #include "verbose.h"
 
 #ifdef _INFINI
