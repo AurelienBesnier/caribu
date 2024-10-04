@@ -1,6 +1,3 @@
-{% set data = load_setup_py_data() %}
-{% set native = 'm2w64-' if win else '' %}
-
 package:
   name: alinea.caribu
   version: {{ data.get('version') }}
