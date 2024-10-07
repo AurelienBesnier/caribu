@@ -300,7 +300,8 @@ Voxel::construction(reel* bornemin,
                      << " = " << SEUIL_NB_DIFF << " - ratio = " << ratio
                      << "\n";
         } else {
-                fscanf(grille_par, "%d %lg", &SEUIL_NB_DIFF, &ratio);
+                if (fscanf(grille_par, "%d %lg", &SEUIL_NB_DIFF, &ratio) == EOF)
+                        printf("EOF in fscanf\n");
                 Ferr << "Seuil dans " << grille_nom << " = " << SEUIL_NB_DIFF
                      << " - ratio = " << ratio << "\n";
         }

@@ -80,9 +80,12 @@ main(int argc, char** argv)
                 // BUG Scons: MC08 : -DNDEBUG Supprime la fonction assert() donc
                 // les fichiers n'�taient pas ouvert
                 assert(fpar != NULL);
-                fgets(line, 200, fpar);
+                if (fgets(line, 200, fpar) == NULL)
+                        printf("ERROR: in fgets\n");
+
                 sscanf(line, "%d", &(msailin.nbang));
-                fgets(line, 200, fpar);
+                if (fgets(line, 200, fpar) == NULL)
+                        printf("ERROR: in fgets\n");
                 sscanf(line, "%d %lf", &N, &dz);
                 fprintf(stderr,
                         "CROPCHAR : N=%d, nbang=%d, dz=%lf\n",

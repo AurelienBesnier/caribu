@@ -395,7 +395,8 @@ init_NFF(char* EnvName, double* Esource, double& Rsph, bool bias)
                         fflush(stderr);
                         exit(15);
                 }
-                fscanf(fenv, "%d %lf", &Nc, &dzc);
+                if (fscanf(fenv, "%d %lf", &Nc, &dzc) == EOF)
+                        printf("EOF in fscanf\n");
                 if (verbose > 3)
                         printf("Nc = %d - dz = %lf\n", Nc, dzc);
 #ifdef _HD
@@ -411,11 +412,12 @@ init_NFF(char* EnvName, double* Esource, double& Rsph, bool bias)
 #endif
                 Tenv.alloue(Nc + 1, 3);
                 for (i = 0; i <= Nc; i++) {
-                        fscanf(fenv,
-                               "%lf %lf %lf ",
-                               &(Tenv(i, 2)),
-                               &(Tenv(i, 0)),
-                               &(Tenv(i, 1)));
+                        if (fscanf(fenv,
+                                   "%lf %lf %lf ",
+                                   &(Tenv(i, 2)),
+                                   &(Tenv(i, 0)),
+                                   &(Tenv(i, 1))) == EOF)
+                                printf("EOF in fscanf\n");
                         if (verbose > 1)
                                 printf("-> z= %lf : trans[%d] = %lf - ref[%d] "
                                        "= %lf\n",

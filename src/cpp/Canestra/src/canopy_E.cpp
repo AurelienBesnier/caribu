@@ -72,15 +72,17 @@ Canopy::sail_pur(VEC** Cfar, double* Eclt, char* envname)
                      << envname << '\n';
                 exit(4);
         }
-        fscanf(fenv, "%d %lf", &Nc, &dzc);
+        if (fscanf(fenv, "%d %lf", &Nc, &dzc) == EOF)
+                printf("EOF in fscanf\n");
         printf("Canopy::sail_pur(): Nc = %d - dz = %lf\n", Nc, dzc);
         Tenv.alloue(Nc + 1, 3);
         for (short i = 0; i <= Nc; i++) {
-                fscanf(fenv,
-                       "%lf %lf %lf ",
-                       &(Tenv(i, 2)),
-                       &(Tenv(i, 0)),
-                       &(Tenv(i, 1)));
+                if (fscanf(fenv,
+                           "%lf %lf %lf ",
+                           &(Tenv(i, 2)),
+                           &(Tenv(i, 0)),
+                           &(Tenv(i, 1))) == EOF)
+                        printf("EOF in fscanf\n");
                 if (verbose > 1)
                         printf("-> z= %lf : trans[%d] = %lf - ref[%d] = %lf\n",
                                Tenv(i, 2),
@@ -1431,12 +1433,12 @@ colorie_triangle(void* tria,
         finy = min(Ty - 1, finy);
 
         //	calcul de grandeurs fixes utilisees pour obtenir l'altitude des
-        //pixels
+        // pixels
         vab = (b[2] - a[2]) / (b[1] - a[1]);
         vbc = (c[2] - b[2]) / (b[1] - a[1]);
 
         //	calcul de grandeurs qui seront incrementes dans la boucle sur
-        //les lignes
+        // les lignes
         yrel = ((((double)deby + 0.5) / K[1]) - a[1]);
         xL = penteL * yrel + a[0];
         xR = penteR * yrel + a[0];
@@ -1533,11 +1535,11 @@ colorie_capteur(REELLE** Zbuf,
         deby = max(0, deby);
         finy = min(Ty - 1, finy);
         //	calcul de grandeurs fixes utilisees pour obtenir l'altitude des
-        //pixels
+        // pixels
         vab = (b[2] - a[2]) / (b[1] - a[1]);
         vbc = (c[2] - b[2]) / (b[1] - a[1]);
         //	calcul de grandeurs qui seront incrementes dans la boucle sur
-        //les lignes
+        // les lignes
         yrel = ((((double)deby + 0.5) / K[1]) - a[1]);
         xL = penteL * yrel + a[0];
         xR = penteR * yrel + a[0];
@@ -2193,13 +2195,13 @@ color_triangle(void* tria,
         finy = min(Ty - 1, finy);
 
         //	calcul de grandeurs fixes utilisees pour obtenir l'altitude des
-        //pixels
+        // pixels
         vab = (b[2] - a[2]) / (Be[1] - Ae[1]);
         // vbc = (c[2] - Be[2])/(Be[1] - Ae[1]);
         vbc = (c[2] - b[2]) / (Be[1] - Ae[1]);
 
         //	calcul de grandeurs qui seront incrementes dans la boucle sur
-        //les lignes
+        // les lignes
         yrel = (double)deby - 0.5 - Ae[1];
         xL = penteL * yrel + Ae[0];
         xR = penteR * yrel + Ae[0];

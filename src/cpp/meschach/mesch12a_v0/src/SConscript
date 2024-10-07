@@ -10,8 +10,6 @@ lib_env.Prepend(CPPPATH='../include')
 # Import/Export symbols for windows
 if lib_env['compiler'] == 'mingw':
     lib_env.AppendUnique(CPPDEFINES=['MINGW','WIN32'])
-lib_env['CCFLAGS'].remove('-O2')
-lib_env['CXXFLAGS'].remove('-O2')
 
 sources = lib_env.ALEAGlob("*.c")
 

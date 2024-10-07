@@ -2,10 +2,9 @@
 #include <iostream>
 using namespace std;
 #include "diffuseur.h"
-#include <stdlib.h>
+#include <ferrlog.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ferrlog.h>
 extern "C"
 {
 #include "sparse.h"
@@ -174,11 +173,15 @@ hd_calc_Bfar(VEC* Cenv, char* pcEnvName, Diffuseur** TabDiff, double Eclt)
         if (verbose > 2)
                 Ferr << "*  hd_calc_Bfar() : Debut" << '\n';
         fic = fopen(pcEnvName, "r");
-        fscanf(fic, "%d %lf", &nbp, &po);
+        if (fscanf(fic, "%d %lf", &nbp, &po) == EOF)
+                printf("EOF in fscanf\n");
         // printf("Nc = %d - dz = %lf\n",nbp,po);
         Tenv.alloue(nbp + 1, 2);
         for (i = 0; i <= nbp; i++) {
-                fscanf(fic, "%lf %lf %lf ", &po, &(Tenv(i, 0)), &(Tenv(i, 1)));
+                if (fscanf(
+                      fic, "%lf %lf %lf ", &po, &(Tenv(i, 0)), &(Tenv(i, 1))) ==
+                    EOF)
+                        printf("EOF in fscanf\n");
                 if (verbose > 1)
                         printf("z=%lf : trans[%d] = %lf - ref[%d] = "
                                "%lf\n ",
@@ -193,7 +196,8 @@ hd_calc_Bfar(VEC* Cenv, char* pcEnvName, Diffuseur** TabDiff, double Eclt)
         fic = fopen(pcBfName, "rb");
         if (verbose > 1)
                 printf("\t-> Lecture de %s\n", pcBfName);
-        fread(&Nc, sizeof(int), 1, fic);
+        if (fread(&Nc, sizeof(int), 1, fic) != 1)
+                Ferr << "ERROR: Read wrong amount of data (fread)";
         if (verbose > 1)
                 Ferr << "Nc = " << Nc;
         if (Nc != nbp) {
@@ -201,7 +205,8 @@ hd_calc_Bfar(VEC* Cenv, char* pcEnvName, Diffuseur** TabDiff, double Eclt)
                      << pcBfName << " differents\n";
                 exit(3);
         }
-        fread(&nbp, sizeof(int), 1, fic);
+        if (fread(&nbp, sizeof(int), 1, fic) != 1)
+                Ferr << "ERROR: Read wrong amount of data (fread)";
         if (verbose > 1)
                 Ferr << "nb_prim = " << nbp;
         // Lecture de BF_name et remplissage de Cenv
@@ -220,7 +225,9 @@ hd_calc_Bfar(VEC* Cenv, char* pcEnvName, Diffuseur** TabDiff, double Eclt)
                 }
                 TabDiff[is]->activ_num(is);
                 for (j = 0; j <= Nc; j++) {
-                        fread(cl, sizeof(int), 2, fic);
+                        if (fread(cl, sizeof(int), 2, fic) != 2)
+                                Ferr
+                                  << "ERROR: Read wrong amount of data (fread)";
                         Cenv->ve[is] +=
                           rho[0] * (cl[0] * Tenv(j, 0) + cl[1] * Tenv(j, 1));
                         if (transp)
@@ -231,7 +238,9 @@ hd_calc_Bfar(VEC* Cenv, char* pcEnvName, Diffuseur** TabDiff, double Eclt)
 
                 if (transp) {
                         for (j = 0; j <= Nc; j++) {
-                                fread(cl, sizeof(int), 2, fic);
+                                if (fread(cl, sizeof(int), 2, fic) != 2)
+                                        Ferr << "ERROR: Read wrong amount of "
+                                                "data (fread)";
                                 Cenv->ve[is] += tau[1] * (cl[0] * Tenv(j, 0) +
                                                           cl[1] * Tenv(j, 1));
                                 if (transp)

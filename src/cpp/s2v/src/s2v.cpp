@@ -123,7 +123,6 @@
 using namespace std;
 
 #include <stdlib.h>
-#include <stdlib.h>
 
 #include <ctype.h>
 
@@ -338,7 +337,8 @@ s2v(int argc, char** argv)
                         return -1;
                 }
 
-                fscanf(fpar, "%lf %lf %lf %lf", &dx, &dy, &xl, &yl);
+                if (fscanf(fpar, "%lf %lf %lf %lf", &dx, &dy, &xl, &yl) == EOF)
+                        printf("EOF in fscanf\n");
                 xl -= dx;
                 dx = xl;
                 yl -= dy;
@@ -376,7 +376,8 @@ s2v(int argc, char** argv)
                         return -2;
                 } // if ftri
                 Ferr << "Lecture du fichier parametre dans fichier :" << '\n';
-                fscanf(fpar, "%d %d %d", &nji, &nja, &njz);
+                if (fscanf(fpar, "%d %d %d", &nji, &nja, &njz) == EOF)
+                        printf("EOF in fscanf\n");
                 printf("nji=%d, nja=%d, njz=%d \n", nji, nja, njz);
                 Ferr << "nji=" << nji << ", nja=" << nja << ", njz=" << njz
                      << '\n';
@@ -384,9 +385,8 @@ s2v(int argc, char** argv)
                 dz = new double[njz];
                 bz = new double[njz];
                 for (i = njz - 1; i >= 0; i--) {
-                        fscanf(fpar,
-                               "%lf",
-                               &(dz[i])); // printf("dz[%d]=%lf\n",i,dz[i]);
+                        if (fscanf(fpar, "%lf", &(dz[i])) == EOF)
+                                printf("EOF in fscanf\n");
                         if (i == njz - 1)
                                 bz[i] = dz[i];
                         else
@@ -395,15 +395,16 @@ s2v(int argc, char** argv)
                 // printf("bz[0]=%lf\n",bz[0]);
                 Ferr << "bz[0]=" << bz[0] << '\n';
                 // fscanf(fpar,"%lf %d %lf",&xl,&njx,&dx);
-                fscanf(fpar,
-                       "\n%lf %d %lf  %lf %d %lf  %d",
-                       &xl,
-                       &njx,
-                       &dx,
-                       &yl,
-                       &njy,
-                       &dy,
-                       &nje);
+                if (fscanf(fpar,
+                           "\n%lf %d %lf  %lf %d %lf  %d",
+                           &xl,
+                           &njx,
+                           &dx,
+                           &yl,
+                           &njy,
+                           &dy,
+                           &nje) == EOF)
+                        printf("EOF in fscanf\n");
                 // printf("%lf %d %lf  %lf %d %lf
                 // %d\n",xl,njx,dx,yl,njy,dy,nje);
                 Ferr << xl << ", " << njx << ", " << dx << ", " << yl << ", ";
@@ -903,9 +904,11 @@ lectri(signed char& test,
         if (test == -10) {
                 return -1;
         }
-        fscanf(fichier, "%d", &natt);
+        if (fscanf(fichier, "%d", &natt) == EOF)
+                printf("EOF in fscanf\n");
         for (i = 0; i < natt; i++) {
-                fscanf(fichier, "%lf", &it);
+                if (fscanf(fichier, "%lf", &it) == EOF)
+                        printf("EOF in fscanf\n");
                 i_att[i] = (long)(it / 1000);
                 if (i == 0) {
                         lab = it;
@@ -915,17 +918,20 @@ lectri(signed char& test,
                         }
                 }
         }
-        fscanf(fichier, "%d", &ent);
+        if (fscanf(fichier, "%d", &ent) == EOF)
+                printf("EOF in fscanf\n");
         nsom = ent;
         for (i = 0; i < 3; i++) {
-                fscanf(fichier, "%lf%lf%lf", &p0, &p1, &p2);
+                if (fscanf(fichier, "%lf%lf%lf", &p0, &p1, &p2) == EOF)
+                        printf("EOF in fscanf\n");
                 T.P[i][0] = p0;
                 T.P[i][1] = p1;
                 T.P[i][2] = p2;
                 // printf("Can(%d,2)=%g\n",i,T.P[i][2]);
         }
         do {
-                fscanf(fichier, "%c", &fin);
+                if (fscanf(fichier, "%c", &fin) == EOF)
+                        printf("EOF in fscanf\n");
         } while (fin != 'p' && !feof(fichier));
         if (!feof(fichier)) {
                 fseek(fichier, -(long)sizeof(char), SEEK_CUR);

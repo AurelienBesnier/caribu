@@ -17,8 +17,6 @@ if lib_env['compiler'] == 'mingw':
 #               "-s"]
 #    lib_env.AppendUnique(LINKFLAGS=LINKFLAGS)
 #    lib_env.AppendUnique(CPPDEFINES=['BCC32','WIN32'])
-lib_env['CCFLAGS'].remove('-O2')
-lib_env['CXXFLAGS'].remove('-O2')
 
 sources = """
 ff.cpp

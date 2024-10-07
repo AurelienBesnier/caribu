@@ -21,9 +21,9 @@ conf.UpdateOptions(options)
 # env = config.ALEASolution(options, tools)
 # oldies
 env = Environment(options=options, ENV = {'PATH' : os.environ['PATH']})
-env['CCFLAGS'] = ['-O3']
-env['CXXFLAGS'] = ['-O3']
-env['CFLAGS'] = ['-O3']
+# env['CCFLAGS'] = ['-O3']
+# env['CXXFLAGS'] = ['-O3']
+# env['CFLAGS'] = ['-O3']
 
 
 import_env = [ 'SystemDrive', 'SystemRoot', 'TEMP', 'TMP' , 'USERPROFILE']

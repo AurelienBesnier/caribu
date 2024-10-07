@@ -52,9 +52,15 @@ hd_mv_mlt(SPMAT* A, VEC* x, VEC* out)
 
         fic = fopen(pcDgName, "rb");
 
-        fread(&n, sizeof(int), 1, fic);
-        fread(&nd, sizeof(int), 1, fic);
-        fread(&dff, sizeof(double), 1, fic);
+        if (fread(&n, sizeof(int), 1, fic) != 1)
+                Ferr << "ERROR: Read wrong amount of "
+                        "data (fread)";
+        if (fread(&nd, sizeof(int), 1, fic) != 1)
+                Ferr << "ERROR: Read wrong amount of "
+                        "data (fread)";
+        if (fread(&dff, sizeof(double), 1, fic) != 1)
+                Ferr << "ERROR: Read wrong amount of "
+                        "data (fread)";
         if (!A || !x)
                 error(E_NULL, (char*)"hd_mv_mlt");
         if (x->dim != n) {
@@ -69,7 +75,9 @@ hd_mv_mlt(SPMAT* A, VEC* x, VEC* out)
         x_ve = x->ve;
         // chargement des indices de la diago
         diag = new int[nd + 1]; // nd= nb prim + 1
-        fread(diag, sizeof(int), nd + 1, fic);
+        if (fread(diag, sizeof(int), nd + 1, fic) != nd + 1)
+                Ferr << "ERROR: Read wrong amount of "
+                        "data (fread)";
         fclose(fic);
         // Produit fait ligne a ligne
         fic = fopen(pcNzName, "rb");
@@ -98,7 +106,9 @@ hd_mv_mlt(SPMAT* A, VEC* x, VEC* out)
                 for (j_idx = (int)fabs(double(diag[i])) - 1;
                      j_idx < fabs(double(diag[i + 1])) - 1;
                      j_idx++) {
-                        fread(tamp, sizeof(int), 2, fic);
+                        if (fread(tamp, sizeof(int), 2, fic) != 2)
+                                Ferr << "ERROR: Read wrong amount of "
+                                        "data (fread)";
                         j = tamp[0];
                         iff = tamp[1];
                         /*if(j>=2000)
@@ -392,12 +402,19 @@ print_hd_mat(Diffuseur** TabDiff)
         Ferr << "*  print_hd_mat() : Debut\n";
         fic = fopen(pcDgName, "rb");
         Ferr << "\t-> Lecture de LORZ/diag.bzh\n";
-        fread(&n, sizeof(int), 1, fic);
+        if (fread(&n, sizeof(int), 1, fic) != 1)
+                Ferr << "ERROR: Read wrong amount of "
+                        "data (fread)";
         Ferr << "n = " << n;
         ligne.alloue(n, 2);
-        fread(&nd, sizeof(int), 1, fic);
+        if (fread(&nd, sizeof(int), 1, fic) != 1)
+                Ferr << "ERROR: Read wrong amount of "
+                        "data (fread)";
         Ferr << "\nnd = " << nd;
-        fread(&dff, sizeof(double), 1, fic);
+        if (fread(&dff, sizeof(double), 1, fic) != 1)
+
+                Ferr << "ERROR: Read wrong amount of "
+                        "data (fread)";
         Ferr << "\ndff = " << dff;
         // chargement des indices de la diago
         diag = new int[nd + 1]; // nd= nb prim + 1
@@ -405,7 +422,9 @@ print_hd_mat(Diffuseur** TabDiff)
                 Ferr << " Impossible d allouer diag[" << nd + 1 << "]!\n";
                 exit(17);
         }
-        fread(diag, sizeof(int), nd + 1, fic);
+        if (fread(diag, sizeof(int), nd + 1, fic) != nd + 1)
+                Ferr << "ERROR: Read wrong amount of "
+                        "data (fread)";
         fclose(fic);
         // Produit fait ligne a ligne
         fic = fopen(pcNzName, "rb");
@@ -431,9 +450,13 @@ print_hd_mat(Diffuseur** TabDiff)
                 for (j_idx = (int)fabs(double(diag[i]));
                      j_idx < fabs(double(diag[i + 1]));
                      j_idx++) {
-                        fread(&j, sizeof(int), 1, fic);
+                        if (fread(&j, sizeof(int), 1, fic) != 1)
+                                Ferr << "ERROR: Read wrong amount of "
+                                        "data (fread)";
                         // Ferr <<"j = "<<j<<endl;
-                        fread(&iff, sizeof(int), 1, fic);
+                        if (fread(&iff, sizeof(int), 1, fic) != 1)
+                                Ferr << "ERROR: Read wrong amount of "
+                                        "data (fread)";
                         if (iff > 0)
                                 po = rho[0];
                         else
