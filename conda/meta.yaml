@@ -9,7 +9,6 @@ build:
   preserve_egg_dir: True
   number: 0
   script: 
-    - {{ compiler('c') }} -v
     - {{ PYTHON }} -m pip install . -vv
 
 requirements:
