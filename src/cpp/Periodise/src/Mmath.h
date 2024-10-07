@@ -5,6 +5,7 @@
 #define _Mmath
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 // acos
 inline double
