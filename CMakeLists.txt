@@ -7,6 +7,14 @@ set(CMAKE_CXX_EXTENSIONS ON)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
+if(DEFINED $ENV{PREFIX})
+    message(STATUS "Prefix: $ENV{PREFIX}")
+else()
+    set(PREFIX $ENV{CONDA_PREFIX})
+    message(STATUS "Prefix: $ENV{PREFIX}")
+    message(STATUS "CONDA_PREFIX: $ENV{CONDA_PREFIX}")
+endif()
+
 include_directories("src/cpp/")
 
 add_subdirectory("src/cpp/meschach/mesch12a/src")
